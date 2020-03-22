@@ -1,5 +1,6 @@
 package com.mickey.mybatis.service.impl.base.insert;
 
+import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.annotation.Id;
 import com.mickey.model.po.BasePo;
@@ -20,8 +21,8 @@ public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceI
     @Override
     @Transactional
     public int insert(BasePo entity, IDataSource... args) {
-        int effectRow = super.getBaseDao(args).insert(entity);
-        return this.RetIdOrEffectRow(entity, effectRow);
+        int effectRows = super.getBaseDao(args).insert(entity);
+        return this.RetIdOrEffectRow(entity, effectRows);
     }
 
     @Override
@@ -43,7 +44,10 @@ public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceI
         return super.getBaseDao(args).insert(statementPostfix, list);
     }
 
-    public <E> Integer RetIdOrEffectRow(E entity, int effectRow) {
+    private <E> Integer RetIdOrEffectRow(E entity, int effectRows) {
+        if(effectRows <= 0){
+            throw new NoveSystemException("500","插入数据异常");
+        }
         if (entity instanceof BasePo) {
             Class<?> cls = entity.getClass();
             Field[] fields = cls.getDeclaredFields();
@@ -56,12 +60,11 @@ public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceI
                     try {
                         return Integer.parseInt(field.get(entity).toString());
                     } catch (Exception e) {
-                        log.error("获取主键值报错", e);
-                        return effectRow;
+                        throw new NoveSystemException("500","获取主键值报错");
                     }
                 }
             }
         }
-        return effectRow;
+        throw new NoveSystemException("500","暂不支持的实体类型");
     }
 }

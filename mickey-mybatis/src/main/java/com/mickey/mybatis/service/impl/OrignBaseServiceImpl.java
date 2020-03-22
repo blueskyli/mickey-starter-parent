@@ -65,15 +65,15 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
     @Override
     @Transactional
     public <E> int insert(String statementPostfix, E entity, IDataSource... args) {
-        int effectRow = this.getBaseDao(args).insert(statementPostfix, entity);
-        return RetIdOrEffectRow(entity, effectRow);
+        int effectRows = this.getBaseDao(args).insert(statementPostfix, entity);
+        return RetIdOrEffectRow(entity, effectRows);
     }
 
     @Override
     @Transactional
     public int insert(T entity, IDataSource... args) {
-        int effectRow = this.getBaseDao(args).insert(entity);
-        return RetIdOrEffectRow(entity, effectRow);
+        int effectRows = this.getBaseDao(args).insert(entity);
+        return RetIdOrEffectRow(entity, effectRows);
     }
 
     @Override
@@ -186,7 +186,10 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
         return this.getBaseDao(args).selectListAndCount(statementPostfix, entity, pageNum, pageSize, orderBy, statementCount);
     }
 
-    private <E> Integer RetIdOrEffectRow(E entity, int effectRow) {
+    private <E> Integer RetIdOrEffectRow(E entity, int effectRows) {
+        if(effectRows <= 0){
+            throw new NoveSystemException("500","插入数据异常");
+        }
         if (entity instanceof BasePo) {
             Class<?> cls = entity.getClass();
             Field[] fields = cls.getDeclaredFields();
@@ -199,12 +202,11 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
                     try {
                         return Integer.parseInt(field.get(entity).toString());
                     } catch (Exception e) {
-                        log.error("获取主键值报错", e);
-                        return effectRow;
+                        throw new NoveSystemException("500","获取主键值报错");
                     }
                 }
             }
         }
-        return effectRow;
+        throw new NoveSystemException("500","暂不支持的实体类型");
     }
 }
