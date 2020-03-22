@@ -1,6 +1,6 @@
 package com.mickey.mybatis.service.impl.base.delete;
 
-import com.mickey.core.exception.*;
+import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.dao.IBaseDao;

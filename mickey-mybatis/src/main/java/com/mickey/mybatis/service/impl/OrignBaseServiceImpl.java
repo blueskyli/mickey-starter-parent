@@ -1,6 +1,6 @@
 package com.mickey.mybatis.service.impl;
 
-import com.mickey.core.exception.*;
+import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.annotation.Id;
 import com.mickey.model.page.QueryResult;

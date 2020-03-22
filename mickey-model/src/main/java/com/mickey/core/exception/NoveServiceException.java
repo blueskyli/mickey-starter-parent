@@ -8,9 +8,6 @@ package com.mickey.core.exception;
  */
 public class NoveServiceException extends AbstractException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3948591577017681256L;
 
 	/**
@@ -24,10 +21,4 @@ public class NoveServiceException extends AbstractException {
 	public NoveServiceException(String code, String message, Throwable th) {
 		super(code, message, th);
 	}
-
-	@Override
-	public ErrorDesc getErrorDesc(Throwable var1) {
-		return null;
-	}
-
 }

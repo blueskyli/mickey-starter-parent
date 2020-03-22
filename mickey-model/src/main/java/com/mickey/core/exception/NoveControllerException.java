@@ -22,9 +22,4 @@ public class NoveControllerException extends AbstractException {
 		super(code, message, th);
 	}
 
-	@Override
-	public ErrorDesc getErrorDesc(Throwable var1) {
-		return null;
-	}
-
 }
