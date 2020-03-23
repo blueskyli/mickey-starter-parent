@@ -6,6 +6,10 @@ import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -27,74 +31,15 @@ public class DateUtils
 
     private static Pattern p = Pattern.compile("\\d{4}+[-]\\d{1,2}+[-]\\d{1,2}+");
 
-    /**
-     * 全日期格式
-     */
-    public static String fullPattern = "yyyy-MM-dd HH:mm:ss";
-
-    /**
-     * 全日期格式
-     */
-    public static String fullPattern1 = "yyyy/MM/dd HH:mm:ss";
-    /**
-     * 时分格式
-     */
-    public static String hhmmPattern = "HH:mm";
-    /**
-     * 全日期格式（没有间隔符号）
-     */
-    public static String FMT_YMD_HMS = "yyyyMMddHHmmss";
-    /**
-     * yyyy-MM格式
-     */
-    public static String FMT_YM = "yyyy-MM";
-    /**
-     * yyyyMMdd格式
-     */
-    public static String FMT_YMD = "yyyyMMdd";
-    /**
-     * yyyyMM格式
-     */
-    public static String FMT_YM_NO_SPLIT = "yyyyMM";
-
-    /**
-     * 默认日期格式
-     */
-    public static String defaultPattern = "yyyy-MM-dd";
-    /**
-     * 默认日期格式
-     */
-    public static String defaultPattern1 = "yyyy/MM/dd";
-
-    /**
-     * yyyy.MM.dd格式
-     */
-    public static String FMT_YMD_POINT = "yyyy.MM.dd";
-
-    /**
-     * yyyy.MM.dd HH:mm格式
-     */
-    public static String FMT_YMD_HM_POINT = "yyyy.MM.dd HH:mm";
-
-    /**
-     * yyyy-MM-dd HH:mm格式
-     */
-    public static String FMT_Y_M_D_HM_POINT = "yyyy-MM-dd HH:mm";
-
-    /**
-     * MM.dd格式
-     */
-    public static String FMT_MD_POINT = "MM.dd";
-
-    /**
-     * yyMMdd格式
-     */
-    public static String FMT_YYMMDD = "yyMMdd";
-
-    /**
-     * yyyy.MM.dd格式
-     */
-    public static String FMT_YYMMDD_POINT = "yyyy.MM.dd";
+    public final static String FMT_DEFAULT_DATATIME = "yyyy-MM-dd HH:mm:ss";
+    public final static String FMT_FULL_SEQ = "yyyyMMddHHmmssSSS";
+    public final static String FMT_YMD_HMS = "yyyyMMddHHmmss";
+    public final static String FMT_HHMM = "HH:mm";
+    public final static String FMT_YMD = "yyyyMMdd";
+    public final static String FMT_YM_NO_SPLIT = "yyyyMM";
+    public final static String FMT_YM = "yyyy-MM";
+    public final static String FMT_DEFAULT_DATA = "yyyy-MM-dd";
+    public final static String FMT_Y_M_D_HM_POINT = "yyyy-MM-dd HH:mm";
 
     /**
      * 中文周几
@@ -104,12 +49,12 @@ public class DateUtils
     /**
      * 默认日期格式
      */
-    private static SimpleDateFormat DEFAULT_DATE = new SimpleDateFormat(defaultPattern);
+    private static SimpleDateFormat DEFAULT_DATE = new SimpleDateFormat(FMT_DEFAULT_DATA);
 
     /**
      * 默认日期格式
      */
-    private static SimpleDateFormat DEFAULT_TIME = new SimpleDateFormat(hhmmPattern);
+    private static SimpleDateFormat DEFAULT_DATETIME = new SimpleDateFormat(FMT_DEFAULT_DATATIME);
 
     /**
      * Formats a Date into a date/time string.
@@ -122,7 +67,6 @@ public class DateUtils
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
     }
-
     /**
      * 获取当前日期
      *
@@ -130,6 +74,26 @@ public class DateUtils
      */
     public static Date getCurrentDate() {
         return Calendar.getInstance().getTime();
+    }
+
+    /**
+     * 转换日期格式(yyyy-MM-dd HH:mm:ss)
+     *
+     * @param date
+     * @return
+     */
+    public static String getFullFormatDate(Date date) {
+        if (date == null) {
+            return "";
+        }
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(FMT_DEFAULT_DATATIME);
+            String strDate = sdf.format(date);
+            return strDate;
+        } catch (Exception e) {
+            log.error("日期格转换失败:" + e);
+        }
+        return "";
     }
 
     /**
@@ -159,7 +123,7 @@ public class DateUtils
     public static String getCurrentDateStr(String pattern) {
         SimpleDateFormat sdf;
         if (pattern == null) {
-            sdf = new SimpleDateFormat(defaultPattern);
+            sdf = new SimpleDateFormat(FMT_DEFAULT_DATA);
         } else {
             sdf = new SimpleDateFormat(pattern);
         }
@@ -238,24 +202,7 @@ public class DateUtils
      */
     public static Date parseToDate(String str) {
         try {
-            Date date = new SimpleDateFormat(defaultPattern).parse(str);
-            return date;
-        } catch (Exception e) {
-            log.error("日期格转换失败: " + e);
-        }
-        return null;
-    }
-
-    /**
-     * 默认格式转换成日期串
-     *
-     * @param dt
-     * @return
-     */
-    public static Date parseToDate(Date dt) {
-        try {
-            String str = new SimpleDateFormat(defaultPattern).format(dt);
-            Date date = new SimpleDateFormat(defaultPattern).parse(str);
+            Date date = new SimpleDateFormat(FMT_DEFAULT_DATA).parse(str);
             return date;
         } catch (Exception e) {
             log.error("日期格转换失败: " + e);
@@ -273,7 +220,7 @@ public class DateUtils
     public static Date parseToDate(String str, String pattern) {
         SimpleDateFormat sdf;
         if (pattern == null || pattern.length() == 0) {
-            sdf = new SimpleDateFormat(defaultPattern);
+            sdf = new SimpleDateFormat(FMT_DEFAULT_DATATIME);
             ;
         } else {
             sdf = new SimpleDateFormat(pattern);
@@ -289,33 +236,12 @@ public class DateUtils
         return null;
     }
 
-    /**
-     * 字符串-日期-格式化日期串
-     *
-     * @param dateStr
-     * @param pattern
-     * @return
-     */
-    public static String getFormatDate(String dateStr, String pattern) {
-        if (pattern == null || pattern.length() == 0) {
-            throw new IllegalArgumentException("pattern");
-        }
-        try {
-            String date = new SimpleDateFormat(defaultPattern).format(new SimpleDateFormat(defaultPattern).parse(dateStr));
-            return date;
-        } catch (Exception e) {
-            log.error("日期格转换失败: {}", e.getMessage());
-        }
-        return "";
-    }
-
     public static String getFormatDate(Date date) {
         if (date == null) {
             return "";
         }
-
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat(defaultPattern);
+            SimpleDateFormat sdf = new SimpleDateFormat(FMT_DEFAULT_DATATIME);
             String strDate = sdf.format(date);
             return strDate;
         } catch (Exception e) {
@@ -347,73 +273,6 @@ public class DateUtils
             log.error("日期格转换失败: {}", e);
         }
         return "";
-    }
-
-    /**
-     * 转换日期格式(yyyy-MM-dd HH:mm:ss)
-     *
-     * @param date
-     * @return
-     */
-    public static String getFullFormatDate(Date date) {
-        if (date == null) {
-            return "";
-        }
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat(fullPattern);
-            String strDate = sdf.format(date);
-            return strDate;
-        } catch (Exception e) {
-            log.error("日期格转换失败:" + e);
-        }
-        return "";
-    }
-
-    /**
-     * 转换日期格式
-     *
-     * @param sdf
-     * @param date
-     * @return
-     */
-    public static String format(SimpleDateFormat sdf, Date date) {
-        if (date == null) {
-            return "";
-        }
-
-        return sdf.format(date);
-    }
-
-    /**
-     * 尝试转换字符串到日期
-     *
-     * @param strDate 日期字符串
-     * @param sdf     日期格式
-     * @return
-     */
-    public static Date tryParse(SimpleDateFormat sdf, String strDate) {
-        if (sdf == null || strDate == null) {
-            return null;
-        }
-        Date ret = null;
-        try {
-            ret = sdf.parse(strDate);
-        } catch (ParseException e) {
-            log.error("日期格转换失败:" + e);
-            // 忽略解析错误
-        }
-        return ret;
-    }
-
-    /**
-     * 将整型的时间类型转换成字符串
-     *
-     * @param to
-     * @return
-     */
-    public static String formatTime(Integer to) {
-        String str = String.format("%04d", to);
-        return str.replaceFirst("^.*(\\d{2})(\\d{2})$", "$1:$2");
     }
 
     /**
@@ -500,8 +359,8 @@ public class DateUtils
      */
     public static int compareDate(Date dt1, Date dt2) {
         int flag = 0;
-        String date1 = new SimpleDateFormat(defaultPattern).format(dt1);
-        String date2 = new SimpleDateFormat(defaultPattern).format(dt2);
+        String date1 = new SimpleDateFormat(FMT_DEFAULT_DATA).format(dt1);
+        String date2 = new SimpleDateFormat(FMT_DEFAULT_DATA).format(dt2);
         flag = date1.compareTo(date2);
         return flag;
     }
@@ -515,21 +374,6 @@ public class DateUtils
      */
     public static boolean compareDateTime(Date dt1, Date dt2) {
         return dt1.getTime() > dt2.getTime();
-    }
-
-    /**
-     * 俩时间比较 0:dt1=dt2 大于0：dt1>dt2 小于0：dt1<dt2
-     *
-     * @param dt1 时间1
-     * @param dt2 时间2
-     * @return
-     */
-    public static int compareTime(Date dt1, Date dt2) {
-        int flag = 0;
-        String date1 = new SimpleDateFormat(hhmmPattern).format(dt1);
-        String date2 = new SimpleDateFormat(hhmmPattern).format(dt2);
-        flag = date1.compareTo(date2);
-        return flag;
     }
 
     /**
@@ -554,7 +398,7 @@ public class DateUtils
      * @throws ParseException
      */
     public static int daysBetween(Date smdate, Date bdate) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat(defaultPattern);
+        SimpleDateFormat sdf = new SimpleDateFormat(FMT_DEFAULT_DATA);
         smdate = sdf.parse(sdf.format(smdate));
         bdate = sdf.parse(sdf.format(bdate));
         Calendar cal = Calendar.getInstance();
@@ -672,41 +516,6 @@ public class DateUtils
     }
 
     /**
-     * 判断时间是否为年末
-     *
-     * @param nowDate 日期（需要验证的日期）
-     * @return boolean true 表示是年末 false 表示不为年末
-     */
-    public static boolean isYearEnd(Date nowDate) {
-        if ("1231".equals(format(nowDate, "MMdd"))) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 判断时间是否为年初
-     *
-     * @param nowDate 日期（需要验证的日期）
-     * @return boolean true 表示是年初 false 表示不为年初
-     */
-    public static boolean isYearBegin(Date nowDate) {
-        if ("0101".equals(format(nowDate, "MMdd"))) {
-            return true;
-        }
-        return false;
-    }
-
-    // 去年的今天
-    public static String getNowOfLastYear() {
-        SimpleDateFormat aSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        GregorianCalendar aGregorianCalendar = new GregorianCalendar();
-        aGregorianCalendar.set(Calendar.YEAR, aGregorianCalendar.get(Calendar.YEAR) - 1);
-        String currentYearAndMonth = aSimpleDateFormat.format(aGregorianCalendar.getTime());
-        return currentYearAndMonth;
-    }
-
-    /**
      * @param beginTime 开始时间
      * @param endTime   结束时间
      * @return
@@ -717,26 +526,6 @@ public class DateUtils
     public static int getDifferMinute(Date beginTime, Date endTime) {
         long seconds = endTime.getTime() - beginTime.getTime();
         return ((int) seconds / 60) / 1000;
-    }
-
-    /**
-     * 功能:暂定月差计算方法 作者: wangnings 创建日期:2016年6月4日 修改者: mender 修改日期: modifydate
-     *
-     * @param biginDate 开始时间
-     * @param endDate   结束时间
-     * @return
-     * @throws ParseException
-     */
-    public static int monthBetween(Date biginDate, Date endDate) throws ParseException {
-        Calendar c = Calendar.getInstance();
-        c.setTime(biginDate);
-        int biginYear = c.get(Calendar.YEAR);
-        int biginMonth = c.get(Calendar.MONTH);
-        c.setTime(endDate);
-        int endYear = c.get(Calendar.YEAR);
-        int endMonth = c.get(Calendar.MONTH);
-
-        return (endYear - biginYear) * 12 + (endMonth - biginMonth);
     }
 
     /**
@@ -753,25 +542,85 @@ public class DateUtils
         return c.getTime();
     }
 
-    /**
-     * @param str
-     * @return
-     * @Description: 转换时间格式
-     * @author clg
-     * @date 2016年7月16日 下午3:48:35
-     */
-    public static String formatDate(String str, String fmtOld, String fmtNew) {
-        if (StringUtils.isBlank(str)) {
-            return "";
-        }
-        SimpleDateFormat oldDate = new SimpleDateFormat(fmtOld);
-        SimpleDateFormat newDate = new SimpleDateFormat(fmtNew);
-        String returnDate = "";
-        try {
-            returnDate = newDate.format(oldDate.parse(str));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return returnDate;
+    public static LocalDate Date2LocalDate(Date endTime) {
+        Instant instant = endTime.toInstant();
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, zone);
+        LocalDate localDate = localDateTime.toLocalDate();
+        return localDate;
+    }
+
+    public static Date localDateToDate(LocalDate localDate) {
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
+        Date date = Date.from(instant);
+        return date;
+    }
+
+    public static String getStartOfDay(String date, String pattern) {
+        return getStartOfDay(parseToDate(date,pattern));
+    }
+
+    public static String getStartOfDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DATE);
+        calendar.set(year, month, day, 0, 0, 0);
+        return format(calendar.getTime(),FMT_DEFAULT_DATATIME);
+    }
+
+    public static String getEndOfDay(String date, String pattern) {
+        return getEndOfDay(parseToDate(date,pattern));
+    }
+
+    public static String getEndOfDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DATE);
+        calendar.set(year, month, day, 23, 59, 59);
+        return format(calendar.getTime(),FMT_DEFAULT_DATATIME);
+    }
+
+    public static void main(String[] args) throws ParseException {
+        log.info("{}",DateUtils.format(new Date(),DateUtils.FMT_DEFAULT_DATATIME));
+        log.info("{}",DateUtils.getCurrentDate());
+        log.info("{}",DateUtils.getCurrentDate());
+        log.info("{}",DateUtils.getCurrentYear());
+        log.info("{}",DateUtils.getCurrentDateStr("yyyy-MM-dd"));
+        log.info("{}",DateUtils.addMinutes(10));
+        log.info("{}",DateUtils.addMinutes(new Date(),10));
+        log.info("{}",DateUtils.addMonth(new Date(),10));
+        log.info("{}",DateUtils.addDay(new Date(),10));
+        log.info("{}",DateUtils.addHour(new Date(),10));
+        log.info("{}",DateUtils.parseToDate("2020-02-01"));
+        log.info("{}",DateUtils.parseToDate("2020-02-01","yyyy-MM-dd"));
+        log.info("{}",DateUtils.getFormatDate(new Date()));
+        log.info("{}",DateUtils.getFormatDate(new Date(),"yyyy-MM-dd"));
+        log.info("{}",DateUtils.getFormatDate(new Date(),"yyyy-MM-dd HH:mm:ss"));
+        log.info("{}",DateUtils.isMonthBegin());
+        log.info("{}",DateUtils.isWeekBegin());
+        log.info("{}",DateUtils.compareDate(new Date(),new Date()));
+        log.info("{}",DateUtils.getChinaeseWeekDay(new Date()));
+        log.info("{}",DateUtils.daysBetween(new Date(),new Date()));
+        log.info("{}",DateUtils.isEndOfWeek(new Date()));
+        log.info("{}",DateUtils.isMonthEnd(new Date()));
+        log.info("{}",DateUtils.isQuarterEnd(new Date()));
+        log.info("{}",DateUtils.isQuarterBegin(new Date()));
+        log.info("{}",DateUtils.isHalfYearEnd(new Date()));
+        log.info("{}",DateUtils.isHalfYearBegin(new Date()));
+        log.info("{}",DateUtils.getDifferMinute(new Date(),new Date()));
+        log.info("{}",DateUtils.Date2LocalDate(new Date()));
+        log.info("{}",DateUtils.localDateToDate(DateUtils.Date2LocalDate(new Date())));
+
+        log.info("{}",DateUtils.getStartOfDay(new Date()));
+        log.info("{}",DateUtils.getStartOfDay("2020-01-01 11:11:11",FMT_DEFAULT_DATATIME));
+        log.info("{}",DateUtils.getStartOfDay("2020-01-01",FMT_DEFAULT_DATA));
+        log.info("{}",DateUtils.getStartOfDay("2020-01-01 11:11:11",FMT_DEFAULT_DATA));
+        log.info("{}",DateUtils.getEndOfDay(new Date()));
+        log.info("{}",DateUtils.getEndOfDay("2020-01-01 11:11:11",FMT_DEFAULT_DATATIME));
+        log.info("{}",DateUtils.getEndOfDay("2020-01-01",FMT_DEFAULT_DATA));
+        log.info("{}",DateUtils.getEndOfDay("2020-01-01 11:11:11",FMT_DEFAULT_DATA));
     }
 }

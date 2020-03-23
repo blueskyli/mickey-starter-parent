@@ -22,23 +22,23 @@ public class MD5Utils
     /**
      * md5加密方法 默认UTF-8编码
      *
-     * @param sourceStr
+     * @param source
      * @return
      */
-    public static String getMD5Str(String sourceStr)
+    public static String getMD5(String source)
     {
 
-        return getMD5Str(sourceStr, DEFALUT_CHARSET);
+        return getMD5(source, DEFALUT_CHARSET);
     }
 
     /**
      * md5加密方法
      *
-     * @param sourceStr
+     * @param source
      * @param charSet
      * @return
      */
-    public static String getMD5Str(String sourceStr, String charSet)
+    public static String getMD5(String source, String charSet)
     {
         String result = "";
         try
@@ -46,11 +46,11 @@ public class MD5Utils
             MessageDigest md = MessageDigest.getInstance("MD5");
             try
             {
-                md.update(sourceStr.getBytes(charSet));
+                md.update(source.getBytes(charSet));
             }
             catch(UnsupportedEncodingException e)
             {
-                md.update(sourceStr.getBytes());
+                md.update(source.getBytes());
             }
             byte b[] = md.digest();
 
