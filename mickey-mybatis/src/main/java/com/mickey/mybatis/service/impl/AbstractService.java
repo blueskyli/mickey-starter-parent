@@ -3,7 +3,6 @@ package com.mickey.mybatis.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.mickey.core.exception.NoveSystemException;
-import com.mickey.model.annotation.Id;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.page.QueryResult;
 import com.mickey.model.po.BasePo;
@@ -13,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.Id;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -41,7 +41,7 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
     @Override
     public int insertList(List<T> list, IDataSource... args) {
         filter(args);
-        return this.mapper.insert(list);
+        return this.mapper.insertList(list);
     }
 
     @Override
@@ -53,7 +53,7 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
     @Override
     public int deleteList(List<T> list, IDataSource... args) {
         filter(args);
-        return this.mapper.delete(list);
+        return this.mapper.deleteList(list);
     }
 
     @Override
@@ -65,7 +65,7 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
     @Override
     public int updateList(List<T> list, IDataSource... args) {
         filter(args);
-        return this.mapper.update(list);
+        return this.mapper.updateList(list);
     }
 
     @Override

@@ -59,7 +59,7 @@ public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements I
     }
 
     @Override
-    public Integer insert(List<T> list) {
+    public Integer insertList(List<T> list) {
         if(CollectionUtils.isEmpty(list))
         {
             return 0;
@@ -80,7 +80,7 @@ public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements I
     }
 
     @Override
-    public Integer update(List<T> list) {
+    public Integer updateList(List<T> list) {
         if(CollectionUtils.isEmpty(list))
         {
             return 0;
@@ -106,13 +106,13 @@ public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements I
     }
 
     @Override
-    public Integer delete(List<T> list) {
+    public Integer deleteList(List<T> list) {
         if(CollectionUtils.isEmpty(list))
         {
             return 0;
         }
         String className = list.get(0).getClass().getName();
-        return getSqlSession().update(className + POSTFIX_DELETELIST, list);
+        return getSqlSession().delete(className + POSTFIX_DELETELIST, list);
     }
 
     @Override

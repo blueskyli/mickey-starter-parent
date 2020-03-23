@@ -2,7 +2,6 @@ package com.mickey.mybatis.service.impl;
 
 import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.functionalInterface.IDataSource;
-import com.mickey.model.annotation.Id;
 import com.mickey.model.page.QueryResult;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.dao.IBaseDao;
@@ -12,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Id;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +79,7 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
     @Override
     @Transactional
     public int insertList(List<T> list, IDataSource... args) {
-        return this.getBaseDao(args).insert(list);
+        return this.getBaseDao(args).insertList(list);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
     @Override
     @Transactional
     public int updateList(List<T> list, IDataSource... args) {
-        return this.getBaseDao(args).update(list);
+        return this.getBaseDao(args).updateList(list);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
     @Override
     @Transactional
     public int deleteList(List<T> list, IDataSource... args) {
-        return this.getBaseDao(args).delete(list);
+        return this.getBaseDao(args).deleteList(list);
     }
 
     @Override

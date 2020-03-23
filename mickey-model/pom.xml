@@ -20,6 +20,10 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+        </dependency>
         <!--集成Swagger2 -->
         <dependency>
             <groupId>io.springfox</groupId>

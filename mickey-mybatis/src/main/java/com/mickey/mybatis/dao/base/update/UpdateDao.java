@@ -23,5 +23,5 @@ public interface UpdateDao<T extends BasePo> {
      * @param list
      * @return
      */
-    Integer update(List<T> list);
+    Integer updateList(List<T> list);
 }

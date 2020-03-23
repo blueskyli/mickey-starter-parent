@@ -23,5 +23,5 @@ public interface InsertDao<T extends BasePo> {
      * @param list
      * @return @
      */
-    Integer insert(List<T> list);
+    Integer insertList(List<T> list);
 }

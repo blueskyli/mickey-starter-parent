@@ -42,7 +42,7 @@ public abstract class DeleteServiceImpl<T extends BasePo> implements BaseService
     @Override
     @Transactional
     public int deleteList(List<T> list, IDataSource... args) {
-        return this.getBaseDao(args).delete(list);
+        return this.getBaseDao(args).deleteList(list);
     }
 
     @Override

@@ -22,7 +22,7 @@ public abstract class UpdateServiceImpl<T extends BasePo> extends SelectServiceI
     @Override
     @Transactional
     public int updateList(List<T> list, IDataSource... args) {
-        return super.getBaseDao(args).update(list);
+        return super.getBaseDao(args).updateList(list);
     }
 
     @Override

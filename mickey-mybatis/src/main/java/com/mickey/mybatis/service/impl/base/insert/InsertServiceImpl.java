@@ -2,12 +2,12 @@ package com.mickey.mybatis.service.impl.base.insert;
 
 import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.functionalInterface.IDataSource;
-import com.mickey.model.annotation.Id;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.service.impl.base.delete.DeleteServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Id;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceI
     @Override
     @Transactional
     public int insertList(List<T> list, IDataSource... args) {
-        return super.getBaseDao(args).insert(list);
+        return super.getBaseDao(args).insertList(list);
     }
 
     @Override

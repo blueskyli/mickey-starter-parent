@@ -23,5 +23,5 @@ public interface DeleteDao<T extends BasePo> {
      * @param list
      * @return
      */
-    Integer delete(List<T> list);
+    Integer deleteList(List<T> list);
 }
