@@ -19,27 +19,27 @@ import java.util.List;
 @Slf4j
 public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceImpl<T> {
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int insert(BasePo entity, IDataSource... args) {
         int effectRows = super.getBaseDao(args).insert(entity);
         return this.RetIdOrEffectRow(entity, effectRows);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int insertList(List<T> list, IDataSource... args) {
         return super.getBaseDao(args).insertList(list);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int insert(String statementPostfix, E entity, IDataSource... args) {
         int effectRow = super.getBaseDao(args).insert(statementPostfix, entity);
         return RetIdOrEffectRow(entity, effectRow);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int insertList(String statementPostfix, List<E> list, IDataSource... args) {
         return super.getBaseDao(args).insert(statementPostfix, list);
     }

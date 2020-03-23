@@ -34,25 +34,25 @@ public abstract class DeleteServiceImpl<T extends BasePo> implements BaseService
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int delete(T entity, IDataSource... args) {
         return this.getBaseDao(args).delete(entity);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int deleteList(List<T> list, IDataSource... args) {
         return this.getBaseDao(args).deleteList(list);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int delete(String statementPostfix, E entity, IDataSource... args) {
         return this.getBaseDao(args).delete(statementPostfix, entity);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int deleteList(String statementPostfix, List<E> list, IDataSource... args) {
         return this.getBaseDao(args).delete(statementPostfix, list);
     }

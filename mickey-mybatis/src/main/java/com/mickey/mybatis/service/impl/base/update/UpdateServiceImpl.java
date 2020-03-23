@@ -14,25 +14,25 @@ import java.util.List;
  */
 public abstract class UpdateServiceImpl<T extends BasePo> extends SelectServiceImpl<T> {
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int update(T entity, IDataSource... args) {
         return super.getBaseDao(args).update(entity);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int updateList(List<T> list, IDataSource... args) {
         return super.getBaseDao(args).updateList(list);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int update(String statementPostfix, E entity, IDataSource... args) {
         return super.getBaseDao(args).update(statementPostfix, entity);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int updateList(String statementPostfix, List<E> list, IDataSource... args) {
         return super.getBaseDao(args).update(statementPostfix, list);
     }

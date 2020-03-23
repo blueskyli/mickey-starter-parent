@@ -63,75 +63,75 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int insert(String statementPostfix, E entity, IDataSource... args) {
         int effectRows = this.getBaseDao(args).insert(statementPostfix, entity);
         return RetIdOrEffectRow(entity, effectRows);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int insert(T entity, IDataSource... args) {
         int effectRows = this.getBaseDao(args).insert(entity);
         return RetIdOrEffectRow(entity, effectRows);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int insertList(List<T> list, IDataSource... args) {
         return this.getBaseDao(args).insertList(list);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int insertList(String statementPostfix, List<E> list, IDataSource... args) {
         return this.getBaseDao(args).insert(statementPostfix, list);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int update(T entity, IDataSource... args) {
         return this.getBaseDao(args).update(entity);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int update(String statementPostfix, E entity, IDataSource... args) {
         return this.getBaseDao(args).update(statementPostfix, entity);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int updateList(List<T> list, IDataSource... args) {
         return this.getBaseDao(args).updateList(list);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int updateList(String statementPostfix, List<E> list, IDataSource... args) {
         return this.getBaseDao(args).update(statementPostfix, list);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int delete(T entity, IDataSource... args) {
         return this.getBaseDao(args).delete(entity);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int delete(String statementPostfix, E entity, IDataSource... args) {
         return this.getBaseDao(args).delete(statementPostfix, entity);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public int deleteList(List<T> list, IDataSource... args) {
         return this.getBaseDao(args).deleteList(list);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public <E> int deleteList(String statementPostfix, List<E> list, IDataSource... args) {
         return this.getBaseDao(args).delete(statementPostfix, list);
     }
