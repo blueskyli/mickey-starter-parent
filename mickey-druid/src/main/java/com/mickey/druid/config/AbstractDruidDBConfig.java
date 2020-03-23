@@ -107,7 +107,8 @@ public abstract class AbstractDruidDBConfig {
 		sqlSessionFactoryBean.setDataSource(dataSource);
 		// mybatis分页
 		Properties props = new Properties();
-		props.setProperty("dialect", "mysql");
+		//PageHelper插件4.0.0以后的版本支持自动识别使用的数据库，可以不用配置
+        //props.setProperty("dialect", "mysql");
 		props.setProperty("reasonable", "true");
 		props.setProperty("supportMethodsArguments", "true");
 		props.setProperty("returnPageInfo", "check");
