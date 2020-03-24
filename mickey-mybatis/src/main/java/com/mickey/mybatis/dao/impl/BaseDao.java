@@ -169,6 +169,12 @@ public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements I
     }
 
     @Override
+    public QueryResult<T> selectListAndCount(T entity, Integer pageNum, Integer pageSize, String orderBy) {
+        String statementPostfix = entity.getClass().getName() + POSTFIX_SELECTLIST;
+        return this.selectListAndCount(statementPostfix,entity,pageNum,pageSize,orderBy);
+    }
+
+    @Override
     public <E> QueryResult<E> selectListAndCount(String statementPostfix, E entity, Integer pageNum, Integer pageSize, String orderBy) {
         Page<?> page = PageHelper.startPage(pageNum, pageSize);
 

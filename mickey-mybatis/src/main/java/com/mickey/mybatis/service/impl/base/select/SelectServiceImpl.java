@@ -75,6 +75,11 @@ public abstract class SelectServiceImpl<T extends BasePo> extends InsertServiceI
     }
 
     @Override
+    public QueryResult<T> selectListAndCount(T entity, Integer pageNum, Integer pageSize, String orderBy, IDataSource... args) {
+        return super.getBaseDao(args).selectListAndCount(entity, pageNum, pageSize, orderBy);
+    }
+
+    @Override
     public <E> QueryResult<E> selectListAndCount(String statementPostfix, E entity, int pageNum, int pageSize, String orderBy, IDataSource... args) {
         return super.getBaseDao(args).selectListAndCount(statementPostfix, entity, pageNum, pageSize, orderBy);
     }

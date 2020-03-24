@@ -7,12 +7,11 @@ import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.dao.IBaseDao;
 import com.mickey.mybatis.dao.impl.BaseDao;
 import com.mickey.mybatis.service.BaseService;
+import com.mickey.mybatis.utils.PoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Id;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -66,14 +65,14 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
     @Transactional(rollbackFor = Exception.class)
     public <E> int insert(String statementPostfix, E entity, IDataSource... args) {
         int effectRows = this.getBaseDao(args).insert(statementPostfix, entity);
-        return RetIdOrEffectRow(entity, effectRows);
+        return PoUtils.RetId(entity, effectRows);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(T entity, IDataSource... args) {
         int effectRows = this.getBaseDao(args).insert(entity);
-        return RetIdOrEffectRow(entity, effectRows);
+        return PoUtils.RetId(entity, effectRows);
     }
 
     @Override
@@ -177,6 +176,11 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
     }
 
     @Override
+    public QueryResult<T> selectListAndCount(T entity, Integer pageNum, Integer pageSize, String orderBy, IDataSource... args) {
+        return this.getBaseDao(args).selectListAndCount(entity, pageNum, pageSize, orderBy);
+    }
+
+    @Override
     public <E> QueryResult<E> selectListAndCount(String statementPostfix, E entity, int pageNum, int pageSize, String orderBy, IDataSource... args) {
         return this.getBaseDao(args).selectListAndCount(statementPostfix, entity, pageNum, pageSize, orderBy);
     }
@@ -184,29 +188,5 @@ public class OrignBaseServiceImpl<T extends BasePo> implements BaseService<T>
     @Override
     public <E> QueryResult<E> selectListAndCount(String statementPostfix, E entity, int pageNum, int pageSize, String orderBy, String statementCount, IDataSource... args) {
         return this.getBaseDao(args).selectListAndCount(statementPostfix, entity, pageNum, pageSize, orderBy, statementCount);
-    }
-
-    private <E> Integer RetIdOrEffectRow(E entity, int effectRows) {
-        if(effectRows <= 0){
-            throw new NoveSystemException("500","插入数据异常");
-        }
-        if (entity instanceof BasePo) {
-            Class<?> cls = entity.getClass();
-            Field[] fields = cls.getDeclaredFields();
-            for (Field field : fields) {
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-                Id annotation = field.getAnnotation(Id.class);
-                if (annotation != null) {
-                    try {
-                        return Integer.parseInt(field.get(entity).toString());
-                    } catch (Exception e) {
-                        throw new NoveSystemException("500","获取主键值报错");
-                    }
-                }
-            }
-        }
-        throw new NoveSystemException("500","暂不支持的实体类型");
     }
 }

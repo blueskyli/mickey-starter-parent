@@ -4,11 +4,10 @@ import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.service.impl.base.delete.DeleteServiceImpl;
+import com.mickey.mybatis.utils.PoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Id;
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -22,7 +21,7 @@ public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceI
     @Transactional(rollbackFor = Exception.class)
     public int insert(BasePo entity, IDataSource... args) {
         int effectRows = super.getBaseDao(args).insert(entity);
-        return this.RetIdOrEffectRow(entity, effectRows);
+        return PoUtils.RetId(entity, effectRows);
     }
 
     @Override
@@ -35,36 +34,12 @@ public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceI
     @Transactional(rollbackFor = Exception.class)
     public <E> int insert(String statementPostfix, E entity, IDataSource... args) {
         int effectRow = super.getBaseDao(args).insert(statementPostfix, entity);
-        return RetIdOrEffectRow(entity, effectRow);
+        return PoUtils.RetId(entity, effectRow);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public <E> int insertList(String statementPostfix, List<E> list, IDataSource... args) {
         return super.getBaseDao(args).insert(statementPostfix, list);
-    }
-
-    private <E> Integer RetIdOrEffectRow(E entity, int effectRows) {
-        if(effectRows <= 0){
-            throw new NoveSystemException("500","插入数据异常");
-        }
-        if (entity instanceof BasePo) {
-            Class<?> cls = entity.getClass();
-            Field[] fields = cls.getDeclaredFields();
-            for (Field field : fields) {
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-                Id annotation = field.getAnnotation(Id.class);
-                if (annotation != null) {
-                    try {
-                        return Integer.parseInt(field.get(entity).toString());
-                    } catch (Exception e) {
-                        throw new NoveSystemException("500","获取主键值报错");
-                    }
-                }
-            }
-        }
-        throw new NoveSystemException("500","暂不支持的实体类型");
     }
 }

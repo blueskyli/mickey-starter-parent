@@ -8,12 +8,11 @@ import com.mickey.model.page.QueryResult;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.mapper.Mapper;
 import com.mickey.mybatis.service.Service;
+import com.mickey.mybatis.utils.PoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.Id;
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -35,7 +34,7 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
     public int insert(T entity, IDataSource... args) {
         filter(args);
         int effectRows = this.mapper.insert(entity);
-        return this.RetIdOrEffectRow(entity, effectRows);
+        return PoUtils.RetId(entity, effectRows);
     }
 
     @Override
@@ -115,7 +114,8 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
     }
 
     @Override
-    public QueryResult<T> selectListAndCount(T entity, Integer pageNum, Integer pageSize, String orderBy) {
+    public QueryResult<T> selectListAndCount(T entity, Integer pageNum, Integer pageSize, String orderBy, IDataSource... args) {
+        filter(args);
         Page<?> page = PageHelper.startPage(pageNum, pageSize);
         if(!StringUtils.isEmpty(orderBy))
         {
@@ -124,31 +124,6 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
         List<T> list = (List<T>) this.mapper.selectList(entity);
         QueryResult<T> result = new QueryResult<>(list, page.getTotal());
         return result;
-    }
-
-    private <E> Integer RetIdOrEffectRow(E entity, int effectRows) {
-        if(effectRows <= 0){
-            throw new NoveSystemException("500","插入数据异常");
-        }
-        if (entity instanceof BasePo) {
-            Class<?> cls = entity.getClass();
-            Field[] fields = cls.getDeclaredFields();
-            for (Field field : fields) {
-                if (!field.isAccessible()) {
-                    field.setAccessible(true);
-                }
-                Id annotation = field.getAnnotation(Id.class);
-                if (annotation != null) {
-                    try {
-                        return Integer.parseInt(field.get(entity).toString());
-                    } catch (Exception e) {
-                        log.error("获取主键值报错", e);
-                        throw new NoveSystemException("500","获取主键值报错");
-                    }
-                }
-            }
-        }
-        throw new NoveSystemException("500","暂不支持的实体类型");
     }
 
     private void filter(IDataSource... args){
