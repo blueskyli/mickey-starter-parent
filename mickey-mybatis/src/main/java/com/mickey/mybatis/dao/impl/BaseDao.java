@@ -11,8 +11,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements IBaseDao<T>
-{
+public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements IBaseDao<T> {
 
     protected static final String POSTFIX_COUNT = ".count";
     protected static final String POSTFIX_SELECTONE = ".selectOne";
