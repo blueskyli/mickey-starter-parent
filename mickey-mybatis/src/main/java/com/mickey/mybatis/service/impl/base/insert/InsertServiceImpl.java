@@ -1,10 +1,9 @@
 package com.mickey.mybatis.service.impl.base.insert;
 
-import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.service.impl.base.delete.DeleteServiceImpl;
-import com.mickey.mybatis.utils.PoUtils;
+import com.mickey.model.po.PoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,7 +1,6 @@
-package com.mickey.mybatis.utils;
+package com.mickey.model.po;
 
 import com.mickey.core.exception.NoveSystemException;
-import com.mickey.model.po.BasePo;
 
 import javax.persistence.Id;
 import java.lang.reflect.Field;

@@ -8,7 +8,7 @@ import com.mickey.model.page.QueryResult;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.mapper.Mapper;
 import com.mickey.mybatis.service.Service;
-import com.mickey.mybatis.utils.PoUtils;
+import com.mickey.model.po.PoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;

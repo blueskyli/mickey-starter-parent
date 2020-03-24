@@ -7,7 +7,7 @@ import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.dao.IBaseDao;
 import com.mickey.mybatis.dao.impl.BaseDao;
 import com.mickey.mybatis.service.BaseService;
-import com.mickey.mybatis.utils.PoUtils;
+import com.mickey.model.po.PoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
