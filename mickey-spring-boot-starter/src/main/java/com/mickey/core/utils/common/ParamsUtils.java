@@ -19,7 +19,7 @@ public class ParamsUtils {
      * @param param
      * @return
      */
-    private String getParam(HttpServletRequest request,String param){
+    public static String getParam(HttpServletRequest request,String param){
         String obj = request.getHeader(param);
         if(StringUtils.isBlank(obj)){
             obj = request.getParameter(param);

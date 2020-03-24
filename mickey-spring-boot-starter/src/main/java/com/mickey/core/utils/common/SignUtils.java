@@ -49,7 +49,10 @@ public class SignUtils {
         while(iter.hasNext())
         {
             String key = iter.next();
-            sb.append(key).append(map.get(key));
+            String _value = (String) map.get(key);
+            if (StringUtils.isNotBlank(_value) && !"null".equals(_value)) {
+                sb.append(key).append(_value);
+            }
         }
         return sb.toString();
     }
@@ -68,7 +71,7 @@ public class SignUtils {
         for (String key : keys) {
             String _value = request.getParameter(key);
             if (StringUtils.isNotBlank(_value) && !"null".equals(_value)) {
-                if(null!=sb.toString()){ sb.append("&");}
+                if(sb.length()>0){ sb.append("&");}
                 sb.append(key).append("=").append(request.getParameter(key));
             }
         }
@@ -89,8 +92,11 @@ public class SignUtils {
         while(iter.hasNext())
         {
             String key = iter.next();
-            if(null!=sb.toString()){ sb.append("&");}
-            sb.append(key).append("=").append(map.get(key));
+            String _value = (String) map.get(key);
+            if (StringUtils.isNotBlank(_value) && !"null".equals(_value)) {
+                if(sb.length()>0){ sb.append("&");}
+                sb.append(key).append("=").append(_value);
+            }
         }
         return sb.toString();
     }
