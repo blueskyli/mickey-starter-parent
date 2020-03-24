@@ -15,6 +15,7 @@ public class Resp
     private static final String SUCCESS_MSG = "";
     private static final int ERROR_CODE = 500;
     private static final String ERROR_MSG = "error";
+    private static final String DATA_DEFAULT = "";
 
     public static JsonResult<Void> ok()
     {
@@ -43,12 +44,12 @@ public class Resp
 
     public static <T> JsonResult<T> error(String msg)
     {
-        return error(ERROR_CODE,msg,null);
+        return error(ERROR_CODE,msg,DATA_DEFAULT);
     }
 
     public static <T> JsonResult<T> error(Integer code,String msg)
     {
-        return error(code,msg,null);
+        return error(code,msg,DATA_DEFAULT);
     }
 
     public static <T> JsonResult<T> error(Integer code, String msg, Object data)
