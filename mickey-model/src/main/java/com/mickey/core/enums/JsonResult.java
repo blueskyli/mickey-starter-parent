@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
  */
 @Builder
 @Data
+@Accessors(chain=true)
 @ApiModel(value = "公共相应参数实体")
 public class JsonResult<T> implements Serializable
 {
