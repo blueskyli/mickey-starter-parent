@@ -34,7 +34,7 @@ public class JsonResult<T> implements Serializable
     public JsonResult(T data)
     {
         super();
-        this.code = 200;
+        this.code = ErrorCodeEnum.OK.getCode();
         this.msg = "success";
         this.data = data;
     }

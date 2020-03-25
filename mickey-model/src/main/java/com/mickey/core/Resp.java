@@ -1,5 +1,6 @@
 package com.mickey.core;
 
+import com.mickey.core.enums.ErrorCodeEnum;
 import com.mickey.core.enums.JsonResult;
 import com.mickey.model.page.QueryResult;
 import org.springframework.ui.ModelMap;
@@ -11,9 +12,9 @@ import org.springframework.ui.ModelMap;
  */
 public class Resp
 {
-    private static final int SUCCESS_CODE = 200;
+    private static final int SUCCESS_CODE = ErrorCodeEnum.OK.getCode();
     private static final String SUCCESS_MSG = "";
-    private static final int ERROR_CODE = 500;
+    private static final int ERROR_CODE = ErrorCodeEnum.INTERNAL_ERROR.getCode();
     private static final String ERROR_MSG = "error";
     private static final String DATA_DEFAULT = "";
 

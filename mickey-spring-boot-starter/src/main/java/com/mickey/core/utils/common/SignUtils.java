@@ -1,10 +1,15 @@
 package com.mickey.core.utils.common;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Streams;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author J·K
@@ -16,12 +21,14 @@ public class SignUtils {
     /**
      * 从request得到排序完成的字符串 k,v不拼接
      * @param request
+     * @param args 需要从request中移除不需要的可key 例如（signature，timestamp）
      * @return
      */
-    public static String sign(HttpServletRequest request){
+    public static String sign(HttpServletRequest request,String ... args){
         List<String> keys = new ArrayList<>(request.getParameterMap().keySet());
-        keys.remove("signature");
-        keys.remove("timestamp");
+        if (args.length > 0) {
+            keys.removeAll(Arrays.stream(args).collect(Collectors.toList()));
+        }
         Collections.sort(keys);
         StringBuilder sb = new StringBuilder();
         for (String key : keys) {
@@ -60,12 +67,14 @@ public class SignUtils {
     /**
      * 返回等号连接 k=v&k=v
      * @param request
+     * @param args 例如（signature，timestamp）
      * @return
      */
-    public static String signpipe(HttpServletRequest request){
+    public static String signpipe(HttpServletRequest request,String ... args){
         List<String> keys = new ArrayList<>(request.getParameterMap().keySet());
-        keys.remove("signature");
-        keys.remove("timestamp");
+        if (args.length > 0) {
+            keys.removeAll(Arrays.stream(args).collect(Collectors.toList()));
+        }
         Collections.sort(keys);
         StringBuilder sb = new StringBuilder();
         for (String key : keys) {
