@@ -80,7 +80,7 @@ public abstract class AbstractExceptionAdvice {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public JsonResult<Void> httpMessageNotReadableExceptionHandler(HttpServletRequest request, Exception exception) {
-        log.error("请求地址:{},系统异常:{}:", request.getRequestURL(), exception);
+        log.error("请求体不能为空，请求地址:{},系统异常:{}:", request.getRequestURL(), exception);
         HttpMessageNotReadableException messageNotReadableException = (HttpMessageNotReadableException) exception;
         return Resp.error()
             .setCode(400)
@@ -98,7 +98,7 @@ public abstract class AbstractExceptionAdvice {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public JsonResult<Void> defalutNumberFormatErrorHandler(HttpServletRequest request, Exception exception) {
-        log.error("请求地址:{},系统异常:{}:", request.getRequestURL(), exception);
+        log.error("参数转换失败，请求地址:{},系统异常:{}:", request.getRequestURL(), exception);
         MethodArgumentTypeMismatchException methodArgumentTypeMismatchException = (MethodArgumentTypeMismatchException) exception;
         log.error("参数转换失败，方法：" + methodArgumentTypeMismatchException.getParameter().getMethod().getName() + ",参数：" +
             methodArgumentTypeMismatchException.getName() + "，信息：" + methodArgumentTypeMismatchException.getLocalizedMessage());
@@ -109,7 +109,7 @@ public abstract class AbstractExceptionAdvice {
 
     @ExceptionHandler(value = DataIntegrityViolationException.class)
     public JsonResult<Void> dataIntegrityViolationErrorHandler(HttpServletRequest request, Exception e) {
-        log.error("请求地址:{},系统异常:{}:", request.getRequestURL(), e);
+        log.error("数据库处理异常，请求地址:{},系统异常:{}:", request.getRequestURL(), e);
         return Resp.error()
             .setCode(ErrorCodeEnum.INTERNAL_ERROR.getCode())
             .setMsg("数据库处理异常");
