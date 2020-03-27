@@ -21,6 +21,10 @@
             <artifactId>mickey-redis</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.mickey</groupId>
+            <artifactId>mickey-generator</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>

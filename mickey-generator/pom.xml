@@ -11,6 +11,17 @@
 
     <artifactId>mickey-generator</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.mickey</groupId>
+            <artifactId>mickey-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
