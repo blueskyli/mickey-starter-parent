@@ -6,7 +6,6 @@ import freemarker.template.TemplateExceptionHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * @author J·K
@@ -14,7 +13,6 @@ import java.util.Objects;
  * @date 2020/3/27 11:18 上午
  */
 public abstract class AbstractTask implements Task {
-    private static final String TEMPLATE_FILE_PATH = System.getProperty("user.dir") + "/src/test/resources/ftl";//模板位置
     public static final String time = DateUtils.getFormatDate(new Date(), "yyyy年MM月dd日");
 
     private Task nextTask= null;
@@ -22,7 +20,7 @@ public abstract class AbstractTask implements Task {
 
     public freemarker.template.Configuration getConfiguration() throws IOException {
         freemarker.template.Configuration cfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_23);
-        cfg.setDirectoryForTemplateLoading(new File(TEMPLATE_FILE_PATH));
+        cfg.setClassForTemplateLoading(this.getClass(), "/ftl");
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.IGNORE_HANDLER);
         return cfg;

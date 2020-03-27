@@ -5,7 +5,6 @@ import com.mickey.core.exception.NoveSystemException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -54,14 +53,14 @@ public class Application {
         try {
             task = clazz.newInstance();
         } catch (Exception e) {
-            throw new NoveSystemException("500","获取task实例报错");
+            throw new NoveSystemException("500", "获取task实例报错");
         }
         return this.registerTask(task);
     }
 
     public Application registerTask(Task task) {
         if (null == task || list.contains(task)) {
-            log.info("注册的类{}为空，或者已经存在",task.getClass().getSimpleName());
+            log.info("注册的类{}为空，或者已经存在", task.getClass().getSimpleName());
             return this;
         }
         if (hasTasks()) {

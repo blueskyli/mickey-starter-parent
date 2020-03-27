@@ -1,7 +1,6 @@
 package com.mickey.generator;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.google.common.collect.Lists;
 import com.mickey.generator.core.Application;
 import com.mickey.generator.core.ApplicationContext;
 import com.mickey.generator.core.SimpleApplicationContext;
@@ -10,8 +9,6 @@ import com.mickey.generator.entity.MickeyConfig;
 import com.mickey.generator.task.*;
 import lombok.Data;
 import lombok.SneakyThrows;
-
-import java.util.List;
 
 /**
  * @author J·K
