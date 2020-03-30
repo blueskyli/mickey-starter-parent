@@ -1,7 +1,7 @@
-# mickey-framework-parent
+# mickey-starter-parent
 
 #### 项目介绍
-mickey-framework-parent
+mickey-starter-parent
 
 #### 软件架构
 软件架构说明
