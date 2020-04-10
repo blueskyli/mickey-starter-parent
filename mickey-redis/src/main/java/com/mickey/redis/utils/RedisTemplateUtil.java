@@ -162,11 +162,18 @@ public class RedisTemplateUtil
     }
 
     /**
+     * 删除key
      * @param key
      * @return
-     * @Description: 根据key增长 ，计数器
-     * @author clg
-     * @date 2016年6月30日 下午2:37:52
+     */
+    public static Boolean delete(String key){
+        return cacheUtils.redisTemplate.delete(key);
+    }
+
+    /**
+     * 根据key增长 ，计数器
+     * @param key
+     * @return
      */
     public static long incr(String key) {
 

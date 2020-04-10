@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceImpl<T> {
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int insert(BasePo entity, IDataSource... args) {
+    public int insert(T entity, IDataSource... args) {
         int effectRows = super.getBaseDao(args).insert(entity);
         return PoUtils.RetId(entity, effectRows);
     }

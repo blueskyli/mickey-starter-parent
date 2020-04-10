@@ -18,6 +18,10 @@ public class NoveSystemException extends AbstractException {
         super(code, message);
     }
 
+    public NoveSystemException(Integer code, String message) {
+        super(String.valueOf(code), message);
+    }
+
     public NoveSystemException(String code, String message, Throwable th) {
         super(code, message, th);
     }
