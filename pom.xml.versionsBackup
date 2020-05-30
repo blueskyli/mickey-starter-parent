@@ -6,7 +6,7 @@
 
     <groupId>com.mickey</groupId>
     <artifactId>mickey-starter-parent</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0-SNAPSHOT</version>
     <modules>
         <module>mickey-spring-boot-starter</module>
         <module>mickey-model</module>
@@ -39,42 +39,42 @@
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-spring-boot-starter</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-model</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-druid</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-mapper</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-po</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-redis</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-generator</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -316,12 +316,13 @@
         <snapshotRepository>
             <id>snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://10.4.89.197:8083/repository/snapshots/</url>
+            <url>http://10.4.89.197:8083/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://10.4.89.197:8083/repository/releases/</url>
+            <url>http://10.4.89.197:8083/nexus/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
+
 </project>

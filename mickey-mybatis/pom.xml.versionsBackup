@@ -5,34 +5,24 @@
     <parent>
         <artifactId>mickey-starter-parent</artifactId>
         <groupId>com.mickey</groupId>
-        <version>1.0.0.RELEASE</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mickey-redis</artifactId>
+    <artifactId>mickey-mybatis</artifactId>
 
     <dependencies>
-        <!--redis-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>com.mickey</groupId>
+            <artifactId>mickey-mybatis-style-mapper</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
-            <version>3.8.2</version>
+            <groupId>com.mickey</groupId>
+            <artifactId>mickey-mybatis-style-po</artifactId>
         </dependency>
-        <!--spring2.0集成redis所需common-pool2-->
-        <!--springboot 2.0 之后底层连接池采用 Lettuce 作为连接池 导入此包-->
-        <!--Spring Boot 1.0 默认使用的是 Jedis 客户端，2.0 替换成了 Lettuce，-->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-        </dependency>
-        <!--fastjson-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
+            <groupId>com.mickey</groupId>
+            <artifactId>mickey-druid</artifactId>
         </dependency>
     </dependencies>
 
@@ -49,13 +39,12 @@
         <snapshotRepository>
             <id>snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://10.4.89.197:8083/repository/snapshots/</url>
+            <url>http://10.4.89.197:8083/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://10.4.89.197:8083/repository/releases/</url>
+            <url>http://10.4.89.197:8083/nexus/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
-
 </project>

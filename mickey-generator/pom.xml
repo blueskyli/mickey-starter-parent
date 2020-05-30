@@ -5,7 +5,7 @@
     <parent>
         <artifactId>mickey-starter-parent</artifactId>
         <groupId>com.mickey</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0.RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -35,12 +35,12 @@
         <snapshotRepository>
             <id>snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://10.4.89.197:8083/nexus/content/repositories/snapshots/</url>
+            <url>http://10.4.89.197:8083/repository/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://10.4.89.197:8083/nexus/content/repositories/releases/</url>
+            <url>http://10.4.89.197:8083/repository/releases/</url>
         </repository>
     </distributionManagement>
 </project>
