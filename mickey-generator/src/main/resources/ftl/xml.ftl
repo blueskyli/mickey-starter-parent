@@ -90,7 +90,7 @@
     <include refid="Table_Name"/>
     <set>
       <#list fields as field>
-        <#if field.fieldName != pk && field.fieldName != "create_time" && field.fieldName != "update_time">
+        <#if field.fieldName != pk && field.fieldName != "createTime" && field.fieldName != "updateTime">
           <if test="${field.fieldName} != null">
             ${field.columnName}=#${right}${field.fieldName}${left},
           </if>
@@ -112,7 +112,7 @@
       <include refid="Table_Name"/>
       <set>
         <#list fields as field>
-          <#if field.fieldName != pk && field.fieldName != "create_time" && field.fieldName != "update_time">
+          <#if field.fieldName != pk && field.fieldName != "createTime" && field.fieldName != "updateTime">
             <if test="item.${field.fieldName} != null">
               ${field.columnName}=#${right}item.${field.fieldName}${left},
             </if>
