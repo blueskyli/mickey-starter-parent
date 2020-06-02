@@ -1,40 +1,42 @@
 package com.mickey.mybatis.po.service.impl;
 
+import com.google.common.collect.Lists;
 import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.page.QueryResult;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.dao.IBaseDao;
 import com.mickey.mybatis.po.service.IBaseService;
-import com.mickey.model.po.PoUtils;
+import com.mickey.model.po.ReflectUtils;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.ParameterizedType;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: 传统po方式调用
- * @author J·K
- * @date 2020/3/20 5:37 下午
  * @param <T>
+ * @author J·K
+ * @Description: 传统po方式调用
+ * @date 2020/3/20 5:37 下午
  */
 @Deprecated
 @Slf4j
-public class OrignBaseServiceImpl<T extends BasePo> implements IBaseService<T>
-{
+public class OrignBaseServiceImpl<T extends BasePo> implements IBaseService<T> {
 
-    @Autowired private Map<String, IBaseDao> map;
+    @Autowired
+    private Map<String, IBaseDao> map;
 
-    public IBaseDao getBaseDao(IDataSource... args)
-    {
-        if(args.length == 0)
+    public IBaseDao getBaseDao(IDataSource... args) {
+        if (args.length == 0)
             return map.get("baseDao");
-        else
-        {
+        else {
             IBaseDao baseDao = map.get(args[0].getBaseDao());
-            if(baseDao == null)
+            if (baseDao == null)
                 throw new NoveSystemException("500", "未知数据源");
             return baseDao;
         }
@@ -56,6 +58,52 @@ public class OrignBaseServiceImpl<T extends BasePo> implements IBaseService<T>
     }
 
     @Override
+    public T selectByPrimaryKey(Integer primaryKey, IDataSource... args) {
+        T t = this.getInstance();
+        ReflectUtils.SetPrimaryKey(t, primaryKey);
+        return this.selectOne(t, args);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteByPrimaryKey(Integer primaryKey, IDataSource... args) {
+        T t = this.getInstance();
+        ReflectUtils.SetPrimaryKey(t, primaryKey);
+        return this.delete(t,args);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer[] primaryKeys, IDataSource... args) {
+        List<T> list = Lists.newArrayList();
+        Arrays.stream(primaryKeys).forEach(x->{
+            T t = this.getInstance();
+            ReflectUtils.SetPrimaryKey(t, x);
+            list.add(t);
+        });
+        return deleteList(list,args);
+    }
+
+    @SneakyThrows
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteLogicByPrimaryKey(Integer primaryKey, IDataSource... args) {
+        T t = this.getInstance();
+        ReflectUtils.SetDelVal(t, primaryKey);
+        return this.update(t,args);
+    }
+
+    @Override
+    public int deleteLogicByPrimaryKey(Integer[] primaryKeys, IDataSource... args) {
+        List<T> list = Lists.newArrayList();
+        Arrays.stream(primaryKeys).forEach(x->{
+            T t = this.getInstance();
+            ReflectUtils.SetDelVal(t, x);
+            list.add(t);
+        });
+        return updateList(list,args);
+    }
+
+    @Override
     public <E> E selectOne(String statementPostfix, E entity, IDataSource... args) {
         return (E) this.getBaseDao(args).selectOne(statementPostfix, entity);
     }
@@ -64,14 +112,14 @@ public class OrignBaseServiceImpl<T extends BasePo> implements IBaseService<T>
     @Transactional(rollbackFor = Exception.class)
     public <E> int insert(String statementPostfix, E entity, IDataSource... args) {
         int effectRows = this.getBaseDao(args).insert(statementPostfix, entity);
-        return PoUtils.RetId(entity, effectRows);
+        return ReflectUtils.RetId(entity, effectRows);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int insert(T entity, IDataSource... args) {
         int effectRows = this.getBaseDao(args).insert(entity);
-        return PoUtils.RetId(entity, effectRows);
+        return ReflectUtils.RetId(entity, effectRows);
     }
 
     @Override
@@ -187,5 +235,12 @@ public class OrignBaseServiceImpl<T extends BasePo> implements IBaseService<T>
     @Override
     public <E> QueryResult<E> selectListAndCount(String statementPostfix, E entity, int pageNum, int pageSize, String orderBy, String statementCount, IDataSource... args) {
         return this.getBaseDao(args).selectListAndCount(statementPostfix, entity, pageNum, pageSize, orderBy, statementCount);
+    }
+
+    @SneakyThrows
+    private T getInstance(){
+        ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
+        Class clazz = (Class<T>) type.getActualTypeArguments()[0];
+        return  (T) clazz.newInstance();
     }
 }

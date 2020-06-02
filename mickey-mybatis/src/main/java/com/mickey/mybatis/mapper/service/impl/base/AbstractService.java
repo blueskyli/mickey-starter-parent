@@ -8,7 +8,7 @@ import com.mickey.model.page.QueryResult;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.mapper.Mapper;
 import com.mickey.mybatis.mapper.service.IBaseService;
-import com.mickey.model.po.PoUtils;
+import com.mickey.model.po.ReflectUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -34,7 +34,7 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
     public int insert(T entity, IDataSource... args) {
         filter(args);
         int effectRows = this.mapper.insert(entity);
-        return PoUtils.RetId(entity, effectRows);
+        return ReflectUtils.RetId(entity, effectRows);
     }
 
     @Override

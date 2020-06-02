@@ -3,7 +3,7 @@ package com.mickey.mybatis.po.service.impl.base.insert;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.po.service.impl.base.delete.DeleteServiceImpl;
-import com.mickey.model.po.PoUtils;
+import com.mickey.model.po.ReflectUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,7 @@ public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceI
     @Transactional(rollbackFor = Exception.class)
     public int insert(T entity, IDataSource... args) {
         int effectRows = super.getBaseDao(args).insert(entity);
-        return PoUtils.RetId(entity, effectRows);
+        return ReflectUtils.RetId(entity, effectRows);
     }
 
     @Override
@@ -33,7 +33,7 @@ public abstract class InsertServiceImpl<T extends BasePo> extends DeleteServiceI
     @Transactional(rollbackFor = Exception.class)
     public <E> int insert(String statementPostfix, E entity, IDataSource... args) {
         int effectRow = super.getBaseDao(args).insert(statementPostfix, entity);
-        return PoUtils.RetId(entity, effectRow);
+        return ReflectUtils.RetId(entity, effectRow);
     }
 
     @Override

@@ -135,7 +135,7 @@
         <where>
             <#list fields as field>
                 <#if field.fieldName == pk>
-                    ${field.columnName}=#${right}item.${field.fieldName}${left}
+                    ${field.columnName}=#${right}${field.fieldName}${left}
                 </#if>
             </#list>
         </where>
@@ -203,7 +203,7 @@
 
   <#macro generateInsertListColumn>
     <#list fields as field>
-      <#if field.columnName != pk && field.columnName != "create_time" && field.columnName != "update_time">
+      <#if field.fieldName != pk && field.columnName != "create_time" && field.columnName != "update_time">
         ${field.columnName},
       </#if>
     </#list>
@@ -211,7 +211,7 @@
 
   <#macro generateInsertListValue>
     <#list fields as field>
-      <#if field.columnName != pk && field.columnName != "create_time" && field.columnName != "update_time">
+      <#if field.fieldName != pk && field.columnName != "create_time" && field.columnName != "update_time">
         #${right}item.${field.fieldName}${left},
       </#if>
     </#list>

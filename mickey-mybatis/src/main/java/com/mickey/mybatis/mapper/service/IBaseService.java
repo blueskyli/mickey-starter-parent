@@ -14,4 +14,38 @@ import com.mickey.mybatis.po.service.base.update.UpdateService;
  */
 public interface IBaseService<T extends BasePo>
     extends InsertService<T>, DeleteService<T>, UpdateService<T>, SelectService<T>, SelectListAndCountService<T> {
+
+    /**
+     * 根据主键查询实体
+     * @param primaryKey
+     * @return
+     */
+    T selectByPrimaryKey(Integer primaryKey);
+    /**
+     * 根据主键删除数据
+     * @param primaryKey
+     * @return
+     */
+    @Deprecated
+    int deleteByPrimaryKey(Integer primaryKey);
+    /**
+     * 根据主键批量删除数据
+     * @param primaryKeys
+     * @return
+     */
+    @Deprecated
+    int deleteByPrimaryKey(Integer[] primaryKeys);
+
+    /**
+     * 根据主键逻辑删除数据 del_Flag = true
+     * @param primaryKey
+     * @return
+     */
+    int deleteLogicByPrimaryKey(Integer primaryKey);
+    /**
+     * 根据主键批量逻辑删除数据 del_Flag = true
+     * @param primaryKeys
+     * @return
+     */
+    int deleteLogicByPrimaryKey(Integer[] primaryKeys);
 }
