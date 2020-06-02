@@ -30,7 +30,17 @@ public class ${className} extends BasePo {
 
     public static final String TABLE_ALIAS = "${tableAlias}";
     
-    ${properties}
+<#--    ${properties}-->
+<#list fields as field>
+    /**
+    * ${field.fieldRemark}
+    */
+<#if field.primaryKey?string('yes','no') == 'yes'>
+    @Id
+</#if>
+    @Column(name = "${field.columnName}")
+    private ${field.fieldType} ${field.fieldName};
+</#list>
 
 	@Override
     public String toString()
