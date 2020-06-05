@@ -41,9 +41,9 @@ public class BaseService<T extends BasePo>
     }
 
     @Override
-    public int deleteById(Integer[] primaryKeys, IDataSource... args) {
+    public int deleteById(List<Integer> primaryKeys, IDataSource... args) {
         List<T> list = Lists.newArrayList();
-        Arrays.stream(primaryKeys).forEach(x->{
+        primaryKeys.forEach(x->{
             T t = this.getInstance();
             ReflectUtils.SetPrimaryKey(t, x);
             list.add(t);
@@ -61,9 +61,9 @@ public class BaseService<T extends BasePo>
     }
 
     @Override
-    public int deleteLogicById(Integer[] primaryKeys, IDataSource... args) {
+    public int deleteLogicById(List<Integer> primaryKeys, IDataSource... args) {
         List<T> list = Lists.newArrayList();
-        Arrays.stream(primaryKeys).forEach(x->{
+        primaryKeys.forEach(x->{
             T t = this.getInstance();
             ReflectUtils.SetDelVal(t, x);
             list.add(t);

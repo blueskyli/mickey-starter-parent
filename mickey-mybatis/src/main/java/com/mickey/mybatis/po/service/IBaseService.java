@@ -1,11 +1,14 @@
 package com.mickey.mybatis.po.service;
 
+import com.google.common.collect.Lists;
 import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.po.service.base.BaseDeleteService;
 import com.mickey.mybatis.po.service.base.BaseInsertService;
 import com.mickey.mybatis.po.service.base.BaseSelectService;
 import com.mickey.mybatis.po.service.base.BaseUpdateService;
+
+import java.util.List;
 
 /**
  * @author J·K
@@ -33,11 +36,19 @@ public interface IBaseService<T extends BasePo>
     /**
      * 根据主键批量删除数据
      * @param primaryKeys
-     * @param args
      * @return
      */
     @Deprecated
-    int deleteById(Integer[] primaryKeys, IDataSource... args);
+    default int deleteById(Integer[] primaryKeys, IDataSource... args){
+        return this.deleteById(Lists.newArrayList(primaryKeys),args);
+    }
+    /**
+     * 根据主键批量删除数据
+     * @param primaryKeys
+     * @return
+     */
+    @Deprecated
+    int deleteById(List<Integer> primaryKeys, IDataSource... args);
 
     /**
      * 根据主键逻辑删除数据 del_Flag = true
@@ -49,8 +60,15 @@ public interface IBaseService<T extends BasePo>
     /**
      * 根据主键批量逻辑删除数据 del_Flag = true
      * @param primaryKeys
-     * @param args
      * @return
      */
-    int deleteLogicById(Integer[] primaryKeys, IDataSource... args);
+    int deleteLogicById(List<Integer> primaryKeys, IDataSource... args);
+    /**
+     * 根据主键批量逻辑删除数据 del_Flag = true
+     * @param primaryKeys
+     * @return
+     */
+    default int deleteLogicById(Integer[] primaryKeys, IDataSource... args){
+        return this.deleteLogicById(Lists.newArrayList(primaryKeys),args);
+    }
 }
