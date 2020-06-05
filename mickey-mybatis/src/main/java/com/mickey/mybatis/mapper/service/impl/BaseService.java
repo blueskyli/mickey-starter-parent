@@ -20,10 +20,10 @@ import java.util.List;
  * @date 2020/3/24 2:36 下午
  */
 @Slf4j
-public class BaseService<T extends BasePo, M extends Mapper> extends AbstractService<T, M> {
+public class BaseService<T extends BasePo, M extends Mapper<T>> extends AbstractService<T, M> {
 
     @Override
-    public T selectByPrimaryKey(Integer primaryKey) {
+    public T selectById(Integer primaryKey) {
         T t = this.getInstance();
         ReflectUtils.SetPrimaryKey(t, primaryKey);
         return super.selectOne(t);
@@ -31,14 +31,14 @@ public class BaseService<T extends BasePo, M extends Mapper> extends AbstractSer
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByPrimaryKey(Integer primaryKey) {
+    public int deleteById(Integer primaryKey) {
         T t = this.getInstance();
         ReflectUtils.SetPrimaryKey(t, primaryKey);
         return super.delete(t);
     }
 
     @Override
-    public int deleteByPrimaryKey(Integer[] primaryKeys) {
+    public int deleteById(Integer[] primaryKeys) {
         List<T> list = Lists.newArrayList();
         Arrays.stream(primaryKeys).forEach(x->{
             T t = this.getInstance();
@@ -50,14 +50,14 @@ public class BaseService<T extends BasePo, M extends Mapper> extends AbstractSer
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteLogicByPrimaryKey(Integer primaryKey) {
+    public int deleteLogicById(Integer primaryKey) {
         T t = this.getInstance();
         ReflectUtils.SetDelVal(t, primaryKey);
         return this.update(t);
     }
 
     @Override
-    public int deleteLogicByPrimaryKey(Integer[] primaryKeys) {
+    public int deleteLogicById(Integer[] primaryKeys) {
         List<T> list = Lists.newArrayList();
         Arrays.stream(primaryKeys).forEach(x->{
             T t = this.getInstance();

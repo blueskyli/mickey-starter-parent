@@ -21,7 +21,7 @@ public interface IBaseService<T extends BasePo>
      * @param args
      * @return
      */
-    T selectByPrimaryKey(Integer primaryKey, IDataSource... args);
+    T selectById(Integer primaryKey, IDataSource... args);
     /**
      * 根据主键删除数据
      * @param primaryKey
@@ -29,7 +29,7 @@ public interface IBaseService<T extends BasePo>
      * @return
      */
     @Deprecated
-    int deleteByPrimaryKey(Integer primaryKey, IDataSource... args);
+    int deleteById(Integer primaryKey, IDataSource... args);
     /**
      * 根据主键批量删除数据
      * @param primaryKeys
@@ -37,7 +37,7 @@ public interface IBaseService<T extends BasePo>
      * @return
      */
     @Deprecated
-    int deleteByPrimaryKey(Integer[] primaryKeys, IDataSource... args);
+    int deleteById(Integer[] primaryKeys, IDataSource... args);
 
     /**
      * 根据主键逻辑删除数据 del_Flag = true
@@ -45,12 +45,12 @@ public interface IBaseService<T extends BasePo>
      * @param args
      * @return
      */
-    int deleteLogicByPrimaryKey(Integer primaryKey, IDataSource... args);
+    int deleteLogicById(Integer primaryKey, IDataSource... args);
     /**
      * 根据主键批量逻辑删除数据 del_Flag = true
      * @param primaryKeys
      * @param args
      * @return
      */
-    int deleteLogicByPrimaryKey(Integer[] primaryKeys, IDataSource... args);
+    int deleteLogicById(Integer[] primaryKeys, IDataSource... args);
 }

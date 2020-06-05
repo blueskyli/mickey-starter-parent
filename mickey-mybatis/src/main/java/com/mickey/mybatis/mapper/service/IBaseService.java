@@ -20,32 +20,32 @@ public interface IBaseService<T extends BasePo>
      * @param primaryKey
      * @return
      */
-    T selectByPrimaryKey(Integer primaryKey);
+    T selectById(Integer primaryKey);
     /**
      * 根据主键删除数据
      * @param primaryKey
      * @return
      */
     @Deprecated
-    int deleteByPrimaryKey(Integer primaryKey);
+    int deleteById(Integer primaryKey);
     /**
      * 根据主键批量删除数据
      * @param primaryKeys
      * @return
      */
     @Deprecated
-    int deleteByPrimaryKey(Integer[] primaryKeys);
+    int deleteById(Integer[] primaryKeys);
 
     /**
      * 根据主键逻辑删除数据 del_Flag = true
      * @param primaryKey
      * @return
      */
-    int deleteLogicByPrimaryKey(Integer primaryKey);
+    int deleteLogicById(Integer primaryKey);
     /**
      * 根据主键批量逻辑删除数据 del_Flag = true
      * @param primaryKeys
      * @return
      */
-    int deleteLogicByPrimaryKey(Integer[] primaryKeys);
+    int deleteLogicById(Integer[] primaryKeys);
 }

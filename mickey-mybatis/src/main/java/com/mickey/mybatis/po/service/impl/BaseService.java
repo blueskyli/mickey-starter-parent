@@ -25,7 +25,7 @@ public class BaseService<T extends BasePo>
 
     @SneakyThrows
     @Override
-    public T selectByPrimaryKey(Integer primaryKey, IDataSource... args) {
+    public T selectById(Integer primaryKey, IDataSource... args) {
         T t = this.getInstance();
         ReflectUtils.SetPrimaryKey(t, primaryKey);
         return super.selectOne(t, args);
@@ -34,14 +34,14 @@ public class BaseService<T extends BasePo>
     @SneakyThrows
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteByPrimaryKey(Integer primaryKey, IDataSource... args) {
+    public int deleteById(Integer primaryKey, IDataSource... args) {
         T t = this.getInstance();
         ReflectUtils.SetPrimaryKey(t, primaryKey);
         return super.delete(t,args);
     }
 
     @Override
-    public int deleteByPrimaryKey(Integer[] primaryKeys, IDataSource... args) {
+    public int deleteById(Integer[] primaryKeys, IDataSource... args) {
         List<T> list = Lists.newArrayList();
         Arrays.stream(primaryKeys).forEach(x->{
             T t = this.getInstance();
@@ -54,14 +54,14 @@ public class BaseService<T extends BasePo>
     @SneakyThrows
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteLogicByPrimaryKey(Integer primaryKey, IDataSource... args) {
+    public int deleteLogicById(Integer primaryKey, IDataSource... args) {
         T t = this.getInstance();
         ReflectUtils.SetDelVal(t, primaryKey);
         return this.update(t,args);
     }
 
     @Override
-    public int deleteLogicByPrimaryKey(Integer[] primaryKeys, IDataSource... args) {
+    public int deleteLogicById(Integer[] primaryKeys, IDataSource... args) {
         List<T> list = Lists.newArrayList();
         Arrays.stream(primaryKeys).forEach(x->{
             T t = this.getInstance();
