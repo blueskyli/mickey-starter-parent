@@ -22,4 +22,11 @@ public interface BaseSelectMapper<T extends BasePo>
      * @return
      */
     List<T> selectList(T entity);
+
+    /**
+     * 根据主键数组查询对象实体
+     * @param list 主键数数组
+     * @return
+     */
+    List<T> selectListByIds(List<Integer> list);
 }

@@ -24,7 +24,7 @@ public class BaseService<T extends BasePo, M extends Mapper<T>> extends Abstract
 
     @Override
     public T selectById(Integer primaryKey) {
-        T t = this.getInstance();
+        T t = super.getInstance();
         ReflectUtils.SetPrimaryKey(t, primaryKey);
         return super.selectOne(t);
     }
@@ -32,7 +32,7 @@ public class BaseService<T extends BasePo, M extends Mapper<T>> extends Abstract
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteById(Integer primaryKey) {
-        T t = this.getInstance();
+        T t = super.getInstance();
         ReflectUtils.SetPrimaryKey(t, primaryKey);
         return super.delete(t);
     }
@@ -41,7 +41,7 @@ public class BaseService<T extends BasePo, M extends Mapper<T>> extends Abstract
     public int deleteById(List<Integer> primaryKeys) {
         List<T> list = Lists.newArrayList();
         primaryKeys.forEach(x->{
-            T t = this.getInstance();
+            T t = super.getInstance();
             ReflectUtils.SetPrimaryKey(t, x);
             list.add(t);
         });
@@ -51,7 +51,7 @@ public class BaseService<T extends BasePo, M extends Mapper<T>> extends Abstract
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteLogicById(Integer primaryKey) {
-        T t = this.getInstance();
+        T t = super.getInstance();
         ReflectUtils.SetDelVal(t, primaryKey);
         return this.update(t);
     }
@@ -60,17 +60,10 @@ public class BaseService<T extends BasePo, M extends Mapper<T>> extends Abstract
     public int deleteLogicById(List<Integer> primaryKeys) {
         List<T> list = Lists.newArrayList();
         primaryKeys.forEach(x->{
-            T t = this.getInstance();
+            T t = super.getInstance();
             ReflectUtils.SetDelVal(t, x);
             list.add(t);
         });
         return updateList(list);
-    }
-
-    @SneakyThrows
-    private T getInstance(){
-        ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
-        Class clazz = (Class<T>) type.getActualTypeArguments()[0];
-        return  (T) clazz.newInstance();
     }
 }

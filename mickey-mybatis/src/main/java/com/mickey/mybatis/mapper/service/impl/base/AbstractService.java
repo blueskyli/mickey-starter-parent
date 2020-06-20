@@ -9,10 +9,12 @@ import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.mapper.Mapper;
 import com.mickey.mybatis.mapper.service.IBaseService;
 import com.mickey.model.po.ReflectUtils;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
@@ -28,6 +30,13 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
 
     public M getMapper() {
         return this.mapper;
+    }
+
+    @SneakyThrows
+    protected T getInstance(){
+        ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
+        Class clazz = (Class<T>) type.getActualTypeArguments()[0];
+        return  (T) clazz.newInstance();
     }
 
     @Override
@@ -83,6 +92,12 @@ public abstract class AbstractService<T extends BasePo,M extends Mapper> impleme
     public List<T> selectList(T entity, IDataSource... args) {
         filter(args);
         return this.mapper.selectList(entity);
+    }
+
+    @Override
+    public List<T> selectList(List<Integer> list, IDataSource... args) {
+        filter(args);
+        return this.mapper.selectListByIds(list);
     }
 
     @Override

@@ -9,6 +9,7 @@
     <#list fields as field>
       <#if field.fieldName == pk>
         <#assign pkPropName="${field.fieldName}" />
+        <#assign pkColumnName="${field.columnName}" />
         <id column="${field.columnName}" property="${field.fieldName}"/>
       <#else>
         <result column="${field.columnName}" property="${field.fieldName}"/>
@@ -128,57 +129,62 @@
     </foreach>
   </update>
 
-  <!--
-    <delete id="delete" parameterType="${entityPath}">
-        delete from
-        <include refid="Table_Name"/>
-        <where>
-            <#list fields as field>
-                <#if field.fieldName == pk>
-                    ${field.columnName}=#${right}${field.fieldName}${left}
-                </#if>
-            </#list>
-        </where>
-    </delete>
+  <delete id="delete" parameterType="${entityPath}">
+      delete from
+      <include refid="Table_Name"/>
+      <where>
+      <#list fields as field>
+        <#if field.fieldName == pk>
+          ${field.columnName}=#${right}${field.fieldName}${left}
+        </#if>
+      </#list>
+      </where>
+  </delete>
 
-    <delete id="deleteList" parameterType="java.util.List">
-        <foreach collection="list" item="item" separator=";">
-            delete from
-            <include refid="Table_Name"/>
-            where
-            <#list fields as field>
-                <#if field.fieldName == pk>
-                    ${field.columnName}=#${right}item.${field.fieldName}${left}
-                </#if>
-            </#list>
-        </foreach>
-    </delete>
-    -->
+  <delete id="deleteList" parameterType="java.util.List">
+      delete from
+      <include refid="Table_Name"/>
+      where ${pkColumnName} in
+      <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+          #${right}item.${pk}${left}
+      </foreach>
+  </delete>
 
   <!-- 查询单表符合条件总条数 -->
   <select id="count" parameterType="${entityPath}" resultType="int">
-    select count(1) from
-    <include refid="Table_Name"/>
-    <where>
-      <include refid="Base_Where"/>
-    </where>
+      select count(1) from
+      <include refid="Table_Name"/>
+      <where>
+          <include refid="Base_Where"/>
+      </where>
   </select>
 
   <!-- 查询符合条件的一条记录 -->
   <select id="selectOne" parameterType="${entityPath}" resultMap="BaseResultMap">
-    <include refid="Base_Select"/>
-    limit 1
+      <include refid="Base_Select"/>
+      limit 1
   </select>
 
   <!-- 查询符合条件的记录 -->
   <select id="selectList" parameterType="${entityPath}" resultMap="BaseResultMap">
-    <include refid="Base_Select"/>
+      <include refid="Base_Select"/>
+  </select>
+
+  <select id="selectListByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column"/>
+      from
+      <include refid="Table_Name"/>
+      where ${pkColumnName} in
+      <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+          #${right}item${left}
+      </foreach>
   </select>
 
   <!-- 查询符合条件的记录  锁定符合条件的行-->
   <select id="selectForUpdate" parameterType="${entityPath}" resultMap="BaseResultMap">
-    <include refid="Base_Select"/>
-    for update
+      <include refid="Base_Select"/>
+      for update
   </select>
 
   <#macro generateInsertColumn>

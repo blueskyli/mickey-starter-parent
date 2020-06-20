@@ -19,6 +19,14 @@ public interface SelectListService<T extends BasePo> {
      * @return
      */
     List<T> selectList(T entity, IDataSource... args);
+
+    /**
+     * 根据主键数组，查询列表
+     * @param list
+     * @param args
+     * @return
+     */
+    List<T> selectList(List<Integer> list, IDataSource... args);
     /**
      * 根据条件查询列表
      *

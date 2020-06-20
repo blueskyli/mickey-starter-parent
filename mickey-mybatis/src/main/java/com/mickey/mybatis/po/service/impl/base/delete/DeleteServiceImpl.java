@@ -5,9 +5,11 @@ import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.dao.IBaseDao;
 import com.mickey.mybatis.po.service.IBaseService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,13 @@ public abstract class DeleteServiceImpl<T extends BasePo> implements IBaseServic
                 throw new NoveSystemException("500", "未知数据源");
             return baseDao;
         }
+    }
+
+    @SneakyThrows
+    protected T getInstance(){
+        ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
+        Class clazz = (Class<T>) type.getActualTypeArguments()[0];
+        return  (T) clazz.newInstance();
     }
 
     @Override

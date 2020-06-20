@@ -18,6 +18,14 @@ public interface SelectListDao<T extends BasePo> {
      */
     List<T> selectList(T entity);
     /**
+     * 根据主键数组查询一个列表， 不分页,不排序
+     *
+     * @param entity  实体对象
+     * @param list 主键数组
+     * @return
+     */
+    List<T> selectList(T entity,List<Integer> list);
+    /**
      * 查询一个列表， 不分页
      *
      * @param entity  实体对象

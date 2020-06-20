@@ -22,6 +22,7 @@ public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements I
     protected static final String POSTFIX_DELETE = ".delete";
     protected static final String POSTFIX_DELETELIST = ".deleteList";
     protected static final String POSTFIX_SELECTLIST = ".selectList";
+    protected static final String POSTFIX_SELECTLIST_BYIDS = ".selectListByIds";
 
 
     @Override
@@ -118,6 +119,12 @@ public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements I
     public List<T> selectList(T entity) {
         String statementPostfix = entity.getClass().getName() + POSTFIX_SELECTLIST;
         return this.selectList(statementPostfix, entity);
+    }
+
+    @Override
+    public List<T> selectList(T entity,List<Integer> list) {
+        String statementPostfix = entity.getClass().getName() + POSTFIX_SELECTLIST_BYIDS;
+        return getSqlSession().selectList(statementPostfix, list);
     }
 
     @Override

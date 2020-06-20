@@ -4,7 +4,9 @@ import com.mickey.model.functionalInterface.IDataSource;
 import com.mickey.model.page.QueryResult;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.po.service.impl.base.insert.InsertServiceImpl;
+import lombok.SneakyThrows;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
@@ -27,6 +29,12 @@ public abstract class SelectServiceImpl<T extends BasePo> extends InsertServiceI
     @Override
     public List<T> selectList(T entity, IDataSource... args) {
         return super.getBaseDao(args).selectList(entity);
+    }
+
+    @Override
+    public List<T> selectList(List<Integer> list, IDataSource... args) {
+        T t = this.getInstance();
+        return super.getBaseDao(args).selectList(t,list);
     }
 
     @Override
