@@ -247,7 +247,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
-                <version>1.1.1</version>
+                <version>2.2.5</version>
             </dependency>
             <!--excel end-->
             <dependency>

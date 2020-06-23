@@ -9,10 +9,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.formula.functions.T;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,6 +71,13 @@ public class ExcelUtils
         while(it.hasNext()){
             cell = xssfRow.createCell(size);
             cell.setCellValue(it.next().toString());
+
+            //设置默认宽度  16
+            xssfSheet.setColumnWidth(size, (int) ((16 + 0.72) * 256));
+
+            //设置表头格式
+            cell.setCellStyle(createStyles(book).get("header"));
+
             size++;
         }
         // bean prop 集合
@@ -86,16 +90,6 @@ public class ExcelUtils
             xssfRow = xssfSheet.createRow(zdRow);
             Object bean = beanIt.next();
             // 利用反射根据prop从list中读取数据
-//            Field[] fields = bean.getClass().getDeclaredFields();
-
-//            List<Field> fields = Stream.of(bean.getClass().getDeclaredFields())
-//                    .collect(Collectors.toList());
-//
-//            if(!bean.getClass().getSuperclass().getName().toLowerCase().equals("java.lang.object")) {
-//                fields.addAll(Stream.of(bean.getClass().getSuperclass().getDeclaredFields())
-//                        .collect(Collectors.toList()));
-//            }
-
             Class<?> _clazz = bean.getClass();
             List<Field> fields = Lists.newArrayList();
             while (_clazz!=null && !_clazz.getName().toLowerCase().equals("java.lang.object")){
@@ -119,22 +113,25 @@ public class ExcelUtils
                     {
                         Method getMethod = clazz.getMethod(getMethodName,new Class[]{});
                         Object value = getMethod.invoke(bean,new Object[] {});
+                        XSSFCell _cell = finalXssfRow.createCell((short) zdCell[0]);
                         if(value instanceof Date)
                         {
-                            finalXssfRow.createCell((short) zdCell[0]).setCellValue(DateUtils.getFullFormatDate((Date)value));
+                            _cell.setCellValue(DateUtils.getFullFormatDate((Date)value));
                         }
                         else if(value instanceof Float || value instanceof Double)
                         {
                             //如果值为Float或者Double，则使用DecimalFormat来格式化，防止转变成科学计数法表示方式
                             DecimalFormat df = new DecimalFormat("#.##");
-                            finalXssfRow.createCell((short) zdCell[0]).setCellType(Cell.CELL_TYPE_STRING);
-                            finalXssfRow.createCell((short) zdCell[0]).setCellValue(df.format(value));
+                            _cell.setCellType(Cell.CELL_TYPE_STRING);
+                            _cell.setCellValue(df.format(value));
                         }
                         else
                         {
                             value = null == value ? "" : value;
-                            finalXssfRow.createCell((short) zdCell[0]).setCellValue(value.toString());
+                            _cell.setCellValue(value.toString());
                         }
+                        //设置表头格式
+                        _cell.setCellStyle(createStyles(book).get("data"));
                     }
                     catch(Exception e)
                     {
@@ -362,6 +359,50 @@ public class ExcelUtils
             return String.valueOf((long) d);
         }
         return String.valueOf(d);
+    }
+
+    /**
+     * 创建表格样式
+     *
+     * @param wb 工作薄对象
+     * @return 样式列表
+     */
+    private static Map<String, CellStyle> createStyles(Workbook wb)
+    {
+        // 写入各条记录,每条记录对应excel表中的一行
+        Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
+        CellStyle style = wb.createCellStyle();
+        style.setAlignment(HorizontalAlignment.CENTER);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        style.setBorderRight(BorderStyle.THIN);
+        style.setRightBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setLeftBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        Font dataFont = wb.createFont();
+        dataFont.setFontName("Arial");
+        dataFont.setFontHeightInPoints((short) 10);
+        style.setFont(dataFont);
+        styles.put("data", style);
+
+        style = wb.createCellStyle();
+        style.cloneStyleFrom(styles.get("data"));
+        style.setAlignment(HorizontalAlignment.CENTER);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        style.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        Font headerFont = wb.createFont();
+        headerFont.setFontName("Arial");
+        headerFont.setFontHeightInPoints((short) 10);
+        headerFont.setBold(true);
+        headerFont.setColor(IndexedColors.WHITE.getIndex());
+        style.setFont(headerFont);
+        styles.put("header", style);
+
+        return styles;
     }
 
     public static void main(String[] args) throws IOException
