@@ -15,6 +15,15 @@ public class ParamsUtils {
 
     /**
      * header/url/PathVariable 中获取参数
+     * @param param
+     * @return
+     */
+    public static String getParam(String param){
+        return ParamsUtils.getParam(ServletUtils.getRequest(),param);
+    }
+
+    /**
+     * header/url/PathVariable 中获取参数
      * @param request
      * @param param
      * @return
@@ -26,6 +35,9 @@ public class ParamsUtils {
         }
         if(StringUtils.isBlank(obj)){
             Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+            if(null == pathVariables){
+                return null;
+            }
             obj = (String)pathVariables.get(param);
         }
         return obj;
