@@ -129,6 +129,7 @@
     </foreach>
   </update>
 
+  <!--
   <delete id="delete" parameterType="${entityPath}">
       delete from
       <include refid="Table_Name"/>
@@ -149,6 +150,7 @@
           #${right}item.${pk}${left}
       </foreach>
   </delete>
+  -->
 
   <!-- 查询单表符合条件总条数 -->
   <select id="count" parameterType="${entityPath}" resultType="int">
