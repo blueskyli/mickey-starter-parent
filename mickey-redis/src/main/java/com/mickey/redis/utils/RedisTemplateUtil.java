@@ -232,7 +232,7 @@ public class RedisTemplateUtil {
      * @param timeout  时间，time要大于0 如果time小于等于0 将设置无限期
      * @param timeUnit 时间单位
      */
-    public static boolean set(String key, String value, long timeout, TimeUnit timeUnit) {
+    public static boolean set(String key, Object value, long timeout, TimeUnit timeUnit) {
         try {
             if (timeout > 0) {
                 cacheUtils.redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
