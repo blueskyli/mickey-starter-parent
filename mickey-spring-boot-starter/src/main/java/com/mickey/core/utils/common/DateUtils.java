@@ -1,6 +1,5 @@
 package com.mickey.core.utils.common;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -563,6 +561,7 @@ public class DateUtils
 
     public static String getStartOfDay(Date date) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DATE);
@@ -576,6 +575,7 @@ public class DateUtils
 
     public static String getEndOfDay(Date date) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DATE);
