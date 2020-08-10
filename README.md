@@ -10,7 +10,7 @@ mickey-starter-parent
 ```
 versions:set -DnewVersion=2.1.50.RELEASE
 deploy
-versions:set -DnewVersion=1.0.1-SNAPSHOT
+versions:set -DnewVersion=1.0-SNAPSHOT
 ```
 #版本介紹
 
