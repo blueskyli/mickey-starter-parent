@@ -5,7 +5,7 @@
     <parent>
         <artifactId>mickey-starter-parent</artifactId>
         <groupId>com.mickey</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -36,6 +36,15 @@
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
+        </dependency>
+        <!--  解决 Illegal DefaultValue null for parameter type integer    异常  -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
