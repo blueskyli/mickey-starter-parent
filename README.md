@@ -16,6 +16,8 @@ versions:set -DnewVersion=1.0-SNAPSHOT
 
 ##正式版本
 1.0.0 初始化项目，基本工具类
+1.0.2 新增db和mybatis转换类型
+1.0.3 升级commons-codec为1.14版本
 
 ##试运行版本
 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法
