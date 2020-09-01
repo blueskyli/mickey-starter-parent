@@ -1,6 +1,5 @@
 package com.mickey.druid.interceptor;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mickey.druid.utils.EscapeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.Executor;
@@ -12,7 +11,6 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -52,10 +50,6 @@ public class NoveSqlInterceptor implements Interceptor {
 
     @SuppressWarnings("unchecked")
     private String modifyLikeSql(String sql, Object parameterObject, BoundSql boundSql) {
-        if (parameterObject instanceof HashMap) {
-        } else {
-            return sql;
-        }
         if (!sql.toLowerCase().contains(" like ") || !sql.toLowerCase().contains("?")) {
             return sql;
         }
@@ -70,33 +64,15 @@ public class NoveSqlInterceptor implements Interceptor {
         }
         // 对关键字进行特殊字符“清洗”，如果有特殊字符的，在特殊字符前添加转义字符（\）
         for (String keyName : keyNames) {
-            HashMap parameter = (HashMap)parameterObject;
-            if (keyName.contains("ew.paramNameValuePairs.") && sql.toLowerCase().contains(" like ?")) {
-                log.info("[NoveSqlInterceptor]->{}","ONE");
-                // 第一种情况：在业务层进行条件构造产生的模糊查询关键字
-                QueryWrapper wrapper = (QueryWrapper)parameter.get("ew");
-                parameter = (HashMap)wrapper.getParamNameValuePairs();
-
-                String[] keyList = keyName.split("\\.");
-                // ew.paramNameValuePairs.MPGENVAL1，截取字符串之后，获取第三个，即为参数名
-                Object a = parameter.get(keyList[2]);
-                if (a instanceof String && (a.toString().contains("_") || a.toString().contains("\\") || a.toString()
-                        .contains("%"))) {
-                    parameter.put(keyList[2],
-                            "%" + EscapeUtils.escapeChar(a.toString().substring(1, a.toString().length() - 1)) + "%");
-                }
-            }  else {
-                log.info("[NoveSqlInterceptor]->{}","TWO");
-                // 第二种情况：在Mapper类的注解SQL中进行了模糊查询的拼接
-                MetaObject metaObject = new Configuration().newMetaObject(parameterObject);
-                Object a = metaObject.getValue(keyName);
-                if (a instanceof String && (a.toString().contains("_") || a.toString().contains("\\") || a.toString()
-                        .contains("%"))) {
-                    metaObject.setValue(keyName, EscapeUtils.escapeChar(a.toString()));
-                }
+            log.info("[NoveSqlInterceptor]->{}", "ONE");
+            // 第一种情况：在Mapper类的注解SQL中进行了模糊查询的拼接
+            MetaObject metaObject = new Configuration().newMetaObject(parameterObject);
+            Object a = metaObject.getValue(keyName);
+            if (a instanceof String && (a.toString().contains("_") || a.toString().contains("\\") || a.toString().contains("%"))) {
+                metaObject.setValue(keyName, EscapeUtils.escapeChar(a.toString()));
             }
         }
-        log.info("[NoveSqlInterceptor]->sql:{}，parameterObject:{}",sql,parameterObject);
+        log.info("[NoveSqlInterceptor]->sql:{}，parameterObject:{}", sql, parameterObject);
         return sql;
     }
 }
