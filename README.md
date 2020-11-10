@@ -10,7 +10,7 @@ mickey-starter-parent
 ```
 versions:set -DnewVersion=2.1.50.RELEASE
 deploy
-versions:set -DnewVersion=1.0.6
+versions:set -DnewVersion=1.0.7
 ```
 #版本介紹
 
@@ -21,6 +21,7 @@ versions:set -DnewVersion=1.0.6
 1.0.4 解决 Illegal DefaultValue null for parameter type integer
 1.0.5 解决mybatis xml like 注入问题
 1.0.6 修改Resp的返回data默认值为null
+1.0.7 修改SignUtils 排序bug
 
 ##试运行版本
 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法

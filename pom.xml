@@ -6,7 +6,7 @@
 
     <groupId>com.mickey</groupId>
     <artifactId>mickey-starter-parent</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <modules>
         <module>mickey-spring-boot-starter</module>
         <module>mickey-model</module>
@@ -40,42 +40,42 @@
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-spring-boot-starter</artifactId>
-                <version>1.0.6</version>
+                <version>1.0.7</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-model</artifactId>
-                <version>1.0.6</version>
+                <version>1.0.7</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-druid</artifactId>
-                <version>1.0.6</version>
+                <version>1.0.7</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis</artifactId>
-                <version>1.0.6</version>
+                <version>1.0.7</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-mapper</artifactId>
-                <version>1.0.6</version>
+                <version>1.0.7</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-po</artifactId>
-                <version>1.0.6</version>
+                <version>1.0.7</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-redis</artifactId>
-                <version>1.0.6</version>
+                <version>1.0.7</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-generator</artifactId>
-                <version>1.0.6</version>
+                <version>1.0.7</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
