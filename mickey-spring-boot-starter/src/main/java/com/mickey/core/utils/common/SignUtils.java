@@ -51,7 +51,7 @@ public class SignUtils {
         Map<String, V> treeMap = new TreeMap<>(String::compareTo);
         treeMap.putAll(map);
         StringBuilder sb = new StringBuilder("");
-        Set<String> keySet = map.keySet();
+        Set<String> keySet = treeMap.keySet();
         Iterator<String> iter = keySet.iterator();
         while(iter.hasNext())
         {
@@ -96,7 +96,7 @@ public class SignUtils {
         Map<String, V> treeMap = new TreeMap<>(String::compareTo);
         treeMap.putAll(map);
         StringBuilder sb = new StringBuilder("");
-        Set<String> keySet = map.keySet();
+        Set<String> keySet = treeMap.keySet();
         Iterator<String> iter = keySet.iterator();
         while(iter.hasNext())
         {
