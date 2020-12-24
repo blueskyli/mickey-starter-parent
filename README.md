@@ -21,7 +21,10 @@ versions:set -DnewVersion=1.0.7
 * 1.0.4 解决 Illegal DefaultValue null for parameter type integer
 * 1.0.5 解决mybatis xml like 注入问题
 * 1.0.6 修改Resp的返回data默认值为null
-* 1.0.7 修改SignUtils 排序bug
+* 1.0.7 修改SignUtils 排序bug 添加 Micro 注解
+* 1.0.8 (未同步其他分支)`1,修改NoveSqlInterceptor中引用类型被修改问题
+         2,新增PagerModel工具类
+         3,修改AbstractDruidDBConfig中pagehelper配置`
 
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法
