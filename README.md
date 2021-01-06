@@ -10,7 +10,7 @@ mickey-starter-parent
 ```
 versions:set -DnewVersion=2.1.50.RELEASE
 deploy
-versions:set -DnewVersion=1.0.7
+versions:set -DnewVersion=1.0.9
 ```
 #版本介紹
 
@@ -25,6 +25,7 @@ versions:set -DnewVersion=1.0.7
 * 1.0.8 (未同步其他分支)`1,修改NoveSqlInterceptor中引用类型被修改问题
          2,新增PagerModel工具类
          3,修改AbstractDruidDBConfig中pagehelper配置`
+* 1.0.9 修改NoveSqlInterceptor为线程安全
 
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法

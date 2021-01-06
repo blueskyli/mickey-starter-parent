@@ -3,6 +3,7 @@ package com.mickey.druid.interceptor;
 import com.google.common.collect.Maps;
 import com.mickey.druid.utils.EscapeUtils;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -12,10 +13,8 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author J·K
@@ -26,11 +25,8 @@ import java.util.Set;
 @Intercepts(@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}))
 public class NoveSqlInterceptor implements Interceptor {
 
-    private HashMap<String, String> map = Maps.newHashMap();
-
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        map.clear();
 
         // 拦截sql
         Object[] args = invocation.getArgs();
@@ -39,7 +35,8 @@ public class NoveSqlInterceptor implements Interceptor {
         BoundSql boundSql = statement.getBoundSql(parameterObject);
         String sql = boundSql.getSql();
         // 处理特殊字符
-        modifyLikeSql(sql, parameterObject, boundSql);
+        Map<String, String> map = Maps.newHashMap();
+        modifyLikeSql(sql, parameterObject, boundSql, map);
         // 返回
         Object proceed = invocation.proceed();
 
@@ -48,7 +45,6 @@ public class NoveSqlInterceptor implements Interceptor {
             MetaObject metaObject = new Configuration().newMetaObject(parameterObject);
             map.forEach((k, v) -> metaObject.setValue(k, v));
         }
-
         return proceed;
     }
 
@@ -63,7 +59,8 @@ public class NoveSqlInterceptor implements Interceptor {
     }
 
     @SuppressWarnings("unchecked")
-    private String modifyLikeSql(String sql, Object parameterObject, BoundSql boundSql) {
+    private String modifyLikeSql(String sql, Object parameterObject, BoundSql boundSql, Map<String, String> map) {
+
         if (!sql.toLowerCase().contains(" like ") || !sql.toLowerCase().contains("?")) {
             return sql;
         }
