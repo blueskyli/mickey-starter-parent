@@ -5,7 +5,7 @@
     <parent>
         <artifactId>mickey-starter-parent</artifactId>
         <groupId>com.mickey</groupId>
-        <version>1.0.0.RELEASE</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,12 +22,12 @@
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-core</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-model</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
