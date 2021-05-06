@@ -26,6 +26,7 @@ versions:set -DnewVersion=1.0.9
          2,新增PagerModel工具类
          3,修改AbstractDruidDBConfig中pagehelper配置`
 * 1.0.9 修改NoveSqlInterceptor为线程安全
+* 1.1.0 新增hutool依赖，新增logback-spring.xml
 
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法
