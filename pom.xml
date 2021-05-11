@@ -15,6 +15,8 @@
         <module>mickey-redis</module>
         <module>mickey-mybatis-style</module>
         <module>mickey-generator</module>
+        <module>mickey-amqp</module>
+        <module>mickey-nacos</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -78,6 +80,16 @@
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-generator</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mickey</groupId>
+                <artifactId>mickey-amqp</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mickey</groupId>
+                <artifactId>mickey-nacos</artifactId>
                 <version>1.1.0</version>
             </dependency>
             <dependency>
