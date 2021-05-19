@@ -7,9 +7,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "druid")
 public class DruidDbProperties {
 
-	private String driverClassName = "com.mysql.jdbc.Driver";
+    /**
+     * mysql-connector-java 5
+     * jdbc:mysql://10.4.96.23:3308/databasename?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+     */
+	//private String driverClassName = "com.mysql.jdbc.Driver";
 
-	/**
+    /**
+     * mysql-connector-java 6
+     * jdbc:mysql://10.4.96.23:3308/databasename?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
+     */
+    private String driverClassName = "com.mysql.cj.jdbc.Driver";
+
+    /**
 	 * 初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时
 	 */
 	private int initialSize = 10;

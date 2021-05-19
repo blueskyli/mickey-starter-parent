@@ -30,6 +30,7 @@ public class ConvertUtils {
             .put("time", "Date", "java.util.Date")
             .put("varchar", "String", "")
             .put("text", "String", "")
+            .put("json", "String", "")
             .put("char", "String", "")
             .put("decimal", "BigDecimal", "java.math.BigDecimal")
             .put("int", "Integer", "")
@@ -191,6 +192,7 @@ public class ConvertUtils {
 
     /**
      * 根据jdbcType得到javaType 和 package
+     *
      * @param rowKey columeType
      * @return
      */

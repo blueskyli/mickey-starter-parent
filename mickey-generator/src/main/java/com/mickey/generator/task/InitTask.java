@@ -72,7 +72,9 @@ public class InitTask extends AbstractTask {
             String tableName = tableRs.getString("TABLE_NAME").toLowerCase();
             String tableRemark = tableRs.getString("REMARKS");
             String tableType = tableRs.getString("TABLE_TYPE");
+            String catalog = tableRs.getString("TABLE_CAT");
             Table table = new Table()
+                .setCatalog(catalog)
                 .setTableName(tableName)
                 .setType(tableType)
                 .setRemark(tableRemark);
@@ -93,7 +95,7 @@ public class InitTask extends AbstractTask {
     private void getPkByTable(DatabaseMetaData dbMetaData, Table table) throws SQLException {
         StringBuilder sb = new StringBuilder();
         // 获取主键
-        ResultSet rs = dbMetaData.getPrimaryKeys(null, null, table.getTableName());
+        ResultSet rs = dbMetaData.getPrimaryKeys(table.getCatalog(), null, table.getTableName());
         while (rs.next()) {
             if (sb.length() > 0)
                 sb.append(",");
