@@ -28,6 +28,11 @@ versions:set -DnewVersion=1.0.9
 * 1.0.9 修改NoveSqlInterceptor为线程安全
 * 1.1.0 新增hutool依赖，新增logback-spring.xml
 
+* 2.0.0 `1、升级springboot版本为2.3.2.RELEASE 
+                springcloud Hoxton.SR8
+                springcloud-alibaba 2.2.5.RELEASE
+         2、修改NoveServiceException构造方法，默认传递错误值为500`
+
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法
 
