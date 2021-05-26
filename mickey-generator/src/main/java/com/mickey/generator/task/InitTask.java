@@ -1,7 +1,5 @@
 package com.mickey.generator.task;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidPooledConnection;
 import com.google.common.collect.Lists;
 import com.mickey.core.exception.NoveSystemException;
 import com.mickey.generator.core.AbstractTask;
@@ -13,10 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +28,13 @@ import java.util.Map;
 @Slf4j
 public class InitTask extends AbstractTask {
 
-    private DruidDataSource dataSource;
+    private DataSource dataSource;
     private MickeyConfig config;
 
     @Override
     protected boolean doInternal(ApplicationContext context) {
 //        log.info("init task start");
-        dataSource = (DruidDataSource)context.getAttribute("dataSource");
+        dataSource = (DataSource)context.getAttribute("dataSource");
         config = (MickeyConfig)context.getAttribute("config");
         try {
             val map = this.getTablesMap(dataSource);
@@ -61,8 +60,8 @@ public class InitTask extends AbstractTask {
         return true;
     }
 
-    private Map<String, Table> getTablesMap(DruidDataSource dataSource) throws SQLException {
-        DruidPooledConnection conn = dataSource.getConnection();
+    private Map<String, Table> getTablesMap(DataSource dataSource) throws SQLException {
+        Connection conn = dataSource.getConnection();
         DatabaseMetaData dbMetaData = conn.getMetaData();
 
         // 获取表的结果集

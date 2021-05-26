@@ -10,7 +10,7 @@ mickey-starter-parent
 ```
 versions:set -DnewVersion=2.1.50.RELEASE
 deploy
-versions:set -DnewVersion=1.0.9
+versions:set -DnewVersion=2.0.1
 ```
 #版本介紹
 
@@ -32,6 +32,8 @@ versions:set -DnewVersion=1.0.9
                 springcloud Hoxton.SR8
                 springcloud-alibaba 2.2.5.RELEASE
          2、修改NoveServiceException构造方法，默认传递错误值为500`
+  
+* 2.0.1 新增BaseTest类，新增openfign-okhttp项目
 
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法

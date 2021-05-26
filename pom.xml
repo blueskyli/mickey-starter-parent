@@ -6,7 +6,7 @@
 
     <groupId>com.mickey</groupId>
     <artifactId>mickey-starter-parent</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <modules>
         <module>mickey-spring-boot-starter</module>
         <module>mickey-model</module>
@@ -17,6 +17,7 @@
         <module>mickey-generator</module>
         <module>mickey-amqp</module>
         <module>mickey-nacos</module>
+        <module>mickey-openfeign</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -48,52 +49,57 @@
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-spring-boot-starter</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-model</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-druid</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-mapper</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-po</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-redis</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-generator</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-amqp</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-nacos</artifactId>
-                <version>2.0.0</version>
+                <version>2.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mickey</groupId>
+                <artifactId>mickey-openfeign</artifactId>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
