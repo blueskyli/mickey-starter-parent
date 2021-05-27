@@ -37,7 +37,7 @@ versions:set -DnewVersion=2.0.1
          2、新增openfign-okhttp项目 
          3、新增日志AOP拦截：需增加配置`
   
-```
+``` yaml
 aspect:
   pointcut:
     enabled: true

@@ -1,5 +1,6 @@
 package com.mickey.openfeign.config;
 
+import com.mickey.openfeign.interceptor.OkHttpLogInterceptor;
 import feign.Logger;
 import feign.codec.ErrorDecoder;
 import okhttp3.ConnectionPool;
@@ -28,15 +29,16 @@ public class FeignAutoConfiguration {
     @ConditionalOnProperty({"feign.okhttp.enabled"})
     public okhttp3.OkHttpClient okHttpClient() {
         return new okhttp3.OkHttpClient.Builder()
-            .readTimeout(20, TimeUnit.SECONDS)
             .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
-            .connectionPool(new ConnectionPool())
+            .connectionPool(new ConnectionPool(10, 5L, TimeUnit.MINUTES))
+            .addInterceptor(new OkHttpLogInterceptor())
             .build();
     }
 
     @Bean
-    public ErrorDecoder errorDecoder(){
+    public ErrorDecoder errorDecoder() {
         return new FeignErrorDecoder();
     }
 }
