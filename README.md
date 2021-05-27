@@ -33,7 +33,17 @@ versions:set -DnewVersion=2.0.1
                 springcloud-alibaba 2.2.5.RELEASE
          2、修改NoveServiceException构造方法，默认传递错误值为500`
   
-* 2.0.1 新增BaseTest类，新增openfign-okhttp项目
+* 2.0.1 `1、新增BaseTest类
+         2、新增openfign-okhttp项目 
+         3、新增日志AOP拦截：需增加配置`
+  
+```
+aspect:
+  pointcut:
+    enabled: true
+    execution: execution(public * com.ecej.member.server.controller..*.*(..))
+```
+* 2.0.2 新增mickey-orm-mybatis-plus项目
 
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法

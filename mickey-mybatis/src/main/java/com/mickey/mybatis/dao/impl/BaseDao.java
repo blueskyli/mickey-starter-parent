@@ -5,12 +5,14 @@ import com.github.pagehelper.PageHelper;
 import com.mickey.model.page.QueryResult;
 import com.mickey.model.po.BasePo;
 import com.mickey.mybatis.dao.IBaseDao;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+@Slf4j
 public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements IBaseDao<T> {
 
     protected static final String POSTFIX_COUNT = ".count";
@@ -93,7 +95,7 @@ public class BaseDao<T extends BasePo> extends SqlSessionDaoSupport implements I
     public Integer delete(T entity) {
         if(null == entity)
         {
-            logger.warn("can not delete data , entity is null !!!");
+            log.warn("can not delete data , entity is null !!!");
             return 0;
         }
         String className = entity.getClass().getName();
