@@ -19,14 +19,31 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "分页结果集")
-public class QueryResult<T> implements Serializable {
+public class QueryPageResult<T> implements Serializable {
 
 	private static final long serialVersionUID = 461900815434592315L;
+
+    public QueryPageResult(long total, List<T> list, boolean hasNextPage, Integer pages, int nextPage) {
+        this.total = total;
+        this.list = list;
+        this.hasNextPage = hasNextPage;
+        this.pages = pages;
+        this.nextPage = nextPage;
+    }
 
     @ApiModelProperty(value = "数据列表")
 	private List<T> list;
 
     @ApiModelProperty(value = "总条数")
 	private Long total = 0L;
+
+    @ApiModelProperty(value = "总页数")
+    private Integer pages;
+
+    @ApiModelProperty(value = "是否有下一页")
+    private boolean hasNextPage;
+
+    @ApiModelProperty(value = "下一页页码")
+    private int nextPage;
 
 }

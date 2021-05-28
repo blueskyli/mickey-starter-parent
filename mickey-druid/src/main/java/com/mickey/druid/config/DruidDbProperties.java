@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties(prefix = "druid")
+@ConfigurationProperties(prefix = "spring.datasource.druid")
 public class DruidDbProperties {
 
     /**

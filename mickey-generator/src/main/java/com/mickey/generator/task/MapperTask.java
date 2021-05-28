@@ -20,6 +20,9 @@ import java.util.Map;
  */
 @Slf4j
 public class MapperTask extends AbstractTask {
+
+    private static String IMPL_FLT_NAME = "mapper.ftl";
+
     @Override
     protected boolean doInternal(ApplicationContext context) {
         MickeyConfig config = (MickeyConfig) context.getAttribute("config");
@@ -46,6 +49,9 @@ public class MapperTask extends AbstractTask {
         data.put("time", time);
         data.put("mapperName", mapperName);
         data.put("entityName", entityClass.getClassName());
+        if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS)) {
+            IMPL_FLT_NAME = "mybatisPlusMapper.ftl";
+        }
 
         File file = new File(
             config.getProjectPath() +
@@ -57,7 +63,7 @@ public class MapperTask extends AbstractTask {
 
         try {
             freemarker.template.Configuration cfg = getConfiguration();
-            cfg.getTemplate("mapper.ftl").process(data,
+            cfg.getTemplate(IMPL_FLT_NAME).process(data,
                 new FileWriter(file));
         } catch (Exception e) {
             log.error("{}", e);

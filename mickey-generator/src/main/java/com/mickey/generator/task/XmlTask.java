@@ -22,6 +22,9 @@ import java.util.Map;
  */
 @Slf4j
 public class XmlTask extends AbstractTask {
+
+    private static String IMPL_FLT_NAME = "xml.ftl";
+
     @Override
     protected boolean doInternal(ApplicationContext context) {
 //        log.info("xml task start");
@@ -53,6 +56,9 @@ public class XmlTask extends AbstractTask {
         data.put("tableName", xmlClass.getTableName());
         data.put("pkName", xmlClass.getPkName());
         data.put("fields", xmlClass.getFields());
+        if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS) || config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_DEFINED)) {
+            IMPL_FLT_NAME = "mybatisPlusXml.ftl";
+        }
 
         File file = new File(
             config.getProjectPath() +
@@ -64,7 +70,7 @@ public class XmlTask extends AbstractTask {
 
         try {
             freemarker.template.Configuration cfg = getConfiguration();
-            cfg.getTemplate("xml.ftl").process(data,
+            cfg.getTemplate(IMPL_FLT_NAME).process(data,
                 new FileWriter(file));
         } catch (Exception e) {
             log.error("{}",e);

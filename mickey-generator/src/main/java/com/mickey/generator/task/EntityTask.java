@@ -26,6 +26,9 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class EntityTask extends AbstractTask {
+
+    private static String IMPL_FLT_NAME = "entity.ftl";
+
     @Override
     protected boolean doInternal(ApplicationContext context) {
 //        log.info("entity task start");
@@ -62,6 +65,9 @@ public class EntityTask extends AbstractTask {
         data.put("import", EntityHandler.fillImport(entityClass.getImports()));
         data.put("properties", EntityHandler.fillField(entityClass.getFields()));
         data.put("fields", entityClass.getFields());
+        if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS) || config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_DEFINED)) {
+            IMPL_FLT_NAME = "mybatisPlusEntity.ftl";
+        }
 
         File file = new File(
             config.getProjectPath() +
@@ -74,7 +80,7 @@ public class EntityTask extends AbstractTask {
 
         try {
             freemarker.template.Configuration cfg = getConfiguration();
-            cfg.getTemplate("entity.ftl").process(data,
+            cfg.getTemplate(IMPL_FLT_NAME).process(data,
                 new FileWriter(file));
         } catch (Exception e) {
             log.error("{}", e);

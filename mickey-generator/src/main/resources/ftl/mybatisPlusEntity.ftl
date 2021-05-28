@@ -7,9 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 ${import}
 
  /**
@@ -23,7 +24,7 @@ ${import}
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain=true)
-@Table(name = "${tableName}")
+@TableName(value = "${tableName}")
 public class ${className} extends BasePo {
 
     public static final String TABLE_ALIAS = "${tableAlias}";
@@ -34,9 +35,10 @@ public class ${className} extends BasePo {
     * ${field.fieldRemark}
     */
 <#if field.primaryKey?string('yes','no') == 'yes'>
-    @Id
+    @TableId(value = "${field.columnName}", type = IdType.AUTO)
+<#else>
+    @TableField(value = "${field.columnName}")
 </#if>
-    @Column(name = "${field.columnName}")
     private ${field.fieldType} ${field.fieldName};
 </#list>
 
