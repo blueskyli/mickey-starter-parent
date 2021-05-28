@@ -184,15 +184,9 @@
       </foreach>
   </select>
 
-  <!-- 查询符合条件的记录  锁定符合条件的行-->
-  <select id="selectForUpdate" parameterType="${entityPath}" resultMap="BaseResultMap">
-      <include refid="Base_Select"/>
-      for update
-  </select>
-
   <#macro generateInsertColumn>
     <#list fields as field>
-      <#if field.columnName != "create_time" && field.columnName != "update_time">
+      <#if field.fieldName != pk && field.columnName != "create_time" && field.columnName != "update_time">
         <if test="${field.fieldName} != null">
           ${field.columnName},
         </if>
@@ -202,7 +196,7 @@
 
   <#macro generateInsertValue>
     <#list fields as field>
-      <#if field.columnName != "create_time" && field.columnName != "update_time">
+      <#if field.fieldName != pk && field.columnName != "create_time" && field.columnName != "update_time">
         <if test="${field.fieldName} != null">
           #${right}${field.fieldName}${left},
         </if>
