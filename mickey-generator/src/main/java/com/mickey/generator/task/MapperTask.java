@@ -51,6 +51,8 @@ public class MapperTask extends AbstractTask {
         data.put("entityName", entityClass.getClassName());
         if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS)) {
             IMPL_FLT_NAME = "mybatisPlusMapper.ftl";
+        }else if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_EXT)) {
+            IMPL_FLT_NAME = "mybatisPlusMapper-Ext.ftl";
         }
 
         File file = new File(

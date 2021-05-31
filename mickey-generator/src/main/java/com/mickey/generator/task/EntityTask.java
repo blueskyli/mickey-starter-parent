@@ -65,7 +65,7 @@ public class EntityTask extends AbstractTask {
         data.put("import", EntityHandler.fillImport(entityClass.getImports()));
         data.put("properties", EntityHandler.fillField(entityClass.getFields()));
         data.put("fields", entityClass.getFields());
-        if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS) || config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_DEFINED)) {
+        if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS) || config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_EXT)) {
             IMPL_FLT_NAME = "mybatisPlusEntity.ftl";
         }
 

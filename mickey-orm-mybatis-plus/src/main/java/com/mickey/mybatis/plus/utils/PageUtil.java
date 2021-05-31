@@ -2,6 +2,7 @@ package com.mickey.mybatis.plus.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mickey.model.page.QueryPageResult;
+import com.mickey.model.page.QueryResult;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ import java.util.stream.Collectors;
  */
 @UtilityClass
 public class PageUtil {
-    public <T, R> QueryPageResult<R> convertPage(Page<T> page, Function<T, R> convert) {
+
+    public <T, R> QueryPageResult<R> QueryPageResult(Page<T> page, Function<T, R> convert) {
         List<R> collect = Optional.ofNullable(page.getRecords())
             .orElse(new ArrayList<>(0))
             .stream()
@@ -29,5 +31,15 @@ public class PageUtil {
             page.hasNext(),
             (int) page.getPages(),
             nexPage);
+    }
+
+    public <T, R> QueryResult<R> QueryResult(Page<T> page, Function<T, R> convert) {
+        List<R> collect = Optional.ofNullable(page.getRecords())
+            .orElse(new ArrayList<>(0))
+            .stream()
+            .map(convert)
+            .collect(Collectors.toList());
+        int nexPage = page.hasNext() ? (int) page.getCurrent() + 1 : -1;
+        return new QueryResult<>(collect, page.getTotal());
     }
 }

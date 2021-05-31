@@ -50,6 +50,8 @@ public class ServiceTask extends AbstractTask {
         data.put("serviceName", serviceName);
         if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS)) {
             IMPL_FLT_NAME = "mybatisPlusService.ftl";
+        } else if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_EXT)) {
+            IMPL_FLT_NAME = "mybatisPlusService-Ext.ftl";
         }
 
         File file = new File(

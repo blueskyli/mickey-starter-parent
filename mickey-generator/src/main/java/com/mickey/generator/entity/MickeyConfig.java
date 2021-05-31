@@ -104,6 +104,6 @@ public class MickeyConfig {
         PO,
         MAPPER,
         MYBATIS_PLUS,
-        MYBATIS_PLUS_DEFINED
+        MYBATIS_PLUS_EXT
     }
 }

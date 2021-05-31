@@ -56,7 +56,7 @@ public class XmlTask extends AbstractTask {
         data.put("tableName", xmlClass.getTableName());
         data.put("pkName", xmlClass.getPkName());
         data.put("fields", xmlClass.getFields());
-        if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS) || config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_DEFINED)) {
+        if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS) || config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_EXT)) {
             IMPL_FLT_NAME = "mybatisPlusXml.ftl";
         }
 
