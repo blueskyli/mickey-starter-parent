@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Id;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -35,6 +36,7 @@ public class ${className} extends BasePo {
     * ${field.fieldRemark}
     */
 <#if field.primaryKey?string('yes','no') == 'yes'>
+    @Id
     @TableId(value = "${field.columnName}", type = IdType.AUTO)
 <#else>
     @TableField(value = "${field.columnName}")
