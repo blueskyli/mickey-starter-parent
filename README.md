@@ -50,3 +50,41 @@ aspect:
 
 ##测试版本
 * 1.0.SNAPSHOT
+
+## 代码生成器
+``` java
+<dependency>
+    <groupId>com.mickey</groupId>
+    <artifactId>mickey-generator</artifactId>
+    <version>${last.version}</version>
+</dependency>
+
+MickeyConfig config = new MickeyConfig();
+config.setBasePackage("com.ecej.member.server")
+.setTableNames( //不设置则生成所有表
+        Sets.newHashSet("member", "member_operation_log")
+)
+.setType(MickeyConfig.TypeEnum.MYBATIS_PLUS_EXT); //根据项目需求选择不同枚举
+new CodeGenerator(dataSource, config)
+        .start();
+```
+
+## web项目使用
+
+```xml
+<parent>
+    <groupId>com.mickey</groupId>
+    <artifactId>mickey-starter-parent</artifactId>
+    <version>${last.version}</version>
+</parent>
+
+<dependency>
+    <groupId>com.mickey</groupId>
+    <artifactId>mickey-spring-boot-starter</artifactId>
+</dependency>
+<!-- 如果不需要mybatis-plus则可以不引用 -->
+<dependency>
+    <groupId>com.mickey</groupId>
+    <artifactId>mickey-orm-mybatis-plus</artifactId>
+</dependency>
+```
