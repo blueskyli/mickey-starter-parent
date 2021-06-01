@@ -19,6 +19,7 @@
         <dependency>
             <groupId>com.mickey</groupId>
             <artifactId>mickey-generator</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
