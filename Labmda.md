@@ -1,5 +1,5 @@
 ## collect总结
-````
+``` text
 toList
 
 List<T>
