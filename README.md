@@ -45,6 +45,8 @@ aspect:
 ```
 * 2.0.2 新增mickey-orm-mybatis-plus项目
 
+* 2.0.3 接入skywalking
+
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法
 

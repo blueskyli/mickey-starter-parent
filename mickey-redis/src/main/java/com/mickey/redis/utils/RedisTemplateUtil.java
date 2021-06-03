@@ -3,12 +3,14 @@ package com.mickey.redis.utils;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,6 +23,11 @@ public class RedisTemplateUtil {
     private RedisTemplate<String, Object> redisTemplate;
 
     private static RedisTemplateUtil cacheUtils;
+
+    /**
+     * 获取锁的超时时间
+     */
+    private static final long timeout = 300;
 
     @PostConstruct
     public void init() {
@@ -654,6 +661,7 @@ public class RedisTemplateUtil {
             return false;
         }
     }
+
     /**
      * 移除N个值为value
      *
@@ -669,6 +677,68 @@ public class RedisTemplateUtil {
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
+        }
+    }
+
+    /**
+     * 加锁，无阻塞 锁超时时间（默认2秒） 锁自旋时间（默认300毫秒）
+     *
+     * @param key lock-key
+     * @return
+     */
+    public static Boolean lock(String key) {
+        return lock(key, 5, TimeUnit.SECONDS, timeout);
+    }
+
+    /**
+     * 加锁，无阻塞 锁自旋时间（默认300毫秒）
+     *
+     * @param key        lock-key
+     * @param expireTime lock过期时间
+     * @param timeUnit
+     * @return
+     */
+    public static Boolean lock(String key, long expireTime, TimeUnit timeUnit) {
+        return lock(key, expireTime, timeUnit, timeout);
+    }
+
+    /**
+     * 加锁，无阻塞
+     *
+     * @param key        lock-key
+     * @param expireTime lock过期时间
+     * @param timeUnit   lock过期时间单位
+     * @param timeout    锁自旋时间-毫秒 -1标识永久等待
+     * @return
+     */
+    public static Boolean lock(String key, long expireTime, TimeUnit timeUnit, long timeout) {
+        String requestId = UUID.randomUUID().toString();
+        Long start = System.currentTimeMillis();
+        //自旋，在一定时间内获取锁，超时则返回错误
+        for (; ; ) {
+            //Set命令返回OK，则证明获取锁成功
+            Boolean ret = cacheUtils.redisTemplate.opsForValue().setIfAbsent(key, requestId, expireTime, timeUnit);
+            if (ret) {
+                return true;
+            }
+            if (timeout != -1) {
+                //否则循环等待，在timeout时间内仍未获取到锁，则获取失败
+                long end = System.currentTimeMillis() - start;
+                if (end >= timeout) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    /**
+     * 删除缓存
+     *
+     * @param key 可以传一个值 或多个
+     */
+    public static void unlock(String key) {
+        if (!StringUtils.isEmpty(key)) {
+            cacheUtils.redisTemplate.delete(key);
         }
     }
 }
