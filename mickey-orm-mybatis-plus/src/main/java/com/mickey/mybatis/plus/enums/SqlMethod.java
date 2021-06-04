@@ -20,6 +20,8 @@ public enum SqlMethod {
      * 批量修改
      */
     UPDATE_LIST_BY_ID("updateList", "根据ID批量修改数据", "<script>\n<foreach collection=\"list\" item=\"item\" separator=\";\">\nupdate %s %s where %s=#{%s} %s\n</foreach>\n</script>"),
+    UPDATE_BY_ID("updateById", "根据ID 选择修改数据", "<script>\nUPDATE %s %s WHERE %s=#{%s} %s\n</script>"),
+
     ;
 
     private String method;

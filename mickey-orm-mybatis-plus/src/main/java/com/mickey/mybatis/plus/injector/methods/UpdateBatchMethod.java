@@ -39,7 +39,7 @@ public class UpdateBatchMethod extends AbstractMethod {
         sqlSet = SqlScriptUtils.convertSet(sqlSet);
         String sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(), sqlSet,
             tableInfo.getKeyColumn(), "item." + tableInfo.getKeyProperty(), additional);
-        log.debug("sql:{}", sql);
+//        log.debug("sql:{}", sql);
 
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return addUpdateMappedStatement(mapperClass, modelClass, sqlMethod.getMethod(), sqlSource);
