@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mickey.model.po.BasePo;
 import com.mickey.model.po.ReflectUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -33,11 +34,18 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
      * @param list
      * @return @
      */
-    @Transactional(rollbackFor = Exception.class)
-    default Integer insertList(List<T> list) {
-        boolean result = saveBatch(list);
-        return result ? list.size() : 0;
-    }
+//    @Transactional(rollbackFor = Exception.class)
+//    default Integer insertList(List<T> list) {
+//        boolean result = saveBatch(list);
+//        return result ? list.size() : 0;
+//    }
+
+    /**
+     * 批量插入数据
+     * @param list
+     * @return
+     */
+    Integer insertList(List<T> list);
 
     /**
      * 更新数据
@@ -57,11 +65,18 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
      * @param list
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
-    default Integer updateList(List<T> list) {
-        boolean result = updateBatchById(list);
-        return result ? list.size() : 0;
-    }
+//    @Transactional(rollbackFor = Exception.class)
+//    default Integer updateList(List<T> list) {
+//        boolean result = updateBatchById(list);
+//        return result ? list.size() : 0;
+//    }
+
+    /**
+     * 根据主键批量更新
+     * @param list
+     * @return
+     */
+    Integer updateList(List<T> list);
 
     /**
      * 根据查询条件查询一条数据
