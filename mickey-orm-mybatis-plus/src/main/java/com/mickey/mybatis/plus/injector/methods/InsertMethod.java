@@ -19,17 +19,20 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
+
+import static java.util.stream.Collectors.joining;
 
 /**
  * @author J·K
- * @description: 重写批量插入方法
+ * @description: 插入
  * @date 2021/6/4 10:04 上午
  */
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
-public class InsertBatchMethod extends AbstractMethod {
+public class InsertMethod extends AbstractMethod {
 
     @Setter
     @Accessors(chain = true)
@@ -38,15 +41,15 @@ public class InsertBatchMethod extends AbstractMethod {
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         KeyGenerator keyGenerator = new NoKeyGenerator();
-        SqlMethod sqlMethod = SqlMethod.INSERT_LIST;
+        SqlMethod sqlMethod = SqlMethod.INSERT_ONE;
         List<TableFieldInfo> fieldList = tableInfo.getFieldList();
-        String insertSqlColumn = tableInfo.getKeyInsertSqlColumn(false) +
-            this.filterTableFieldInfo(fieldList, predicate, TableFieldInfo::getInsertSqlColumn, EMPTY);
-        String columnScript = LEFT_BRACKET + insertSqlColumn.substring(0, insertSqlColumn.length() - 1) + RIGHT_BRACKET;
-        String insertSqlProperty = tableInfo.getKeyInsertSqlProperty("item.", false) +
-            this.filterTableFieldInfo(fieldList, predicate, i -> i.getInsertSqlProperty("item."), EMPTY);
-        insertSqlProperty = LEFT_BRACKET + insertSqlProperty.substring(0, insertSqlProperty.length() - 1) + RIGHT_BRACKET;
-        String valuesScript = SqlScriptUtils.convertForeach(insertSqlProperty, "list", null, "item", COMMA);
+
+        String insertSqlColumn = tableInfo.getKeyInsertSqlColumn(true) + this.filterTableFieldInfo(fieldList, predicate,
+            i -> i.getInsertSqlColumnMaybeIf(null), NEWLINE);
+        String columnScript = SqlScriptUtils.convertTrim(insertSqlColumn, LEFT_BRACKET, RIGHT_BRACKET, null, COMMA);
+        String insertSqlProperty = tableInfo.getKeyInsertSqlProperty(null, true) + this.filterTableFieldInfo(fieldList, predicate,
+            i -> i.getInsertSqlPropertyMaybeIf(null), NEWLINE);
+        String valuesScript = SqlScriptUtils.convertTrim(insertSqlProperty, LEFT_BRACKET, RIGHT_BRACKET, null, COMMA);
         String keyProperty = null;
         String keyColumn = null;
         // 表包含主键处理逻辑,如果不包含主键当普通字段处理
@@ -65,7 +68,8 @@ public class InsertBatchMethod extends AbstractMethod {
             }
         }
         String sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(), columnScript, valuesScript);
-//        log.info("sql:{}",sql);
+//        log.info("sql:{}", sql);
+
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return this.addInsertMappedStatement(mapperClass, modelClass, sqlMethod.getMethod(), sqlSource, keyGenerator, keyProperty, keyColumn);
     }

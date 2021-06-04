@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.injector.methods.*;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
-import com.mickey.mybatis.plus.injector.methods.InsertBatchMethod;
-import com.mickey.mybatis.plus.injector.methods.UpdateBatchMethod;
-import com.mickey.mybatis.plus.injector.methods.UpdateById;
+import com.mickey.mybatis.plus.injector.methods.*;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -24,12 +22,10 @@ public class MickeySqlInjector extends DefaultSqlInjector {
     public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
         Predicate<TableFieldInfo> predicate = x -> !(x.getProperty().equals("createTime") || x.getProperty().equals("updateTime"));
         List<AbstractMethod> methodList = Stream.of(
-            new Insert(),
             new Delete(),
             new DeleteByMap(),
             new DeleteById(),
             new DeleteBatchByIds(),
-            new Update(),
             new SelectById(),
             new SelectBatchByIds(),
             new SelectByMap(),
@@ -43,7 +39,9 @@ public class MickeySqlInjector extends DefaultSqlInjector {
 
         methodList.add(new InsertBatchMethod(predicate));
         methodList.add(new UpdateBatchMethod(predicate));
-        methodList.add(new UpdateById(predicate));
+        methodList.add(new UpdateByIdMethod(predicate));
+        methodList.add(new InsertMethod(predicate));
+        methodList.add(new UpdateMethod(predicate));
         return methodList;
     }
 }

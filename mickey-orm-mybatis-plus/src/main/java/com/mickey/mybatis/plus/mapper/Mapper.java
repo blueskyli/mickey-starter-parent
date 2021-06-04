@@ -1,5 +1,6 @@
 package com.mickey.mybatis.plus.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mickey.model.po.BasePo;
 import org.apache.ibatis.annotations.Param;
@@ -26,4 +27,8 @@ public interface Mapper<T extends BasePo> extends BaseMapper<T> {
      * @return
      */
     Integer updateList(@Param("list") List<T> list);
+
+    @Deprecated
+    @Override
+    int update(T entity, Wrapper<T> updateWrapper);
 }

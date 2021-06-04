@@ -1,5 +1,6 @@
 package com.mickey.mybatis.plus.service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mickey.model.po.BasePo;
@@ -30,18 +31,6 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
 
     /**
      * 批量插入数据
-     *
-     * @param list
-     * @return @
-     */
-//    @Transactional(rollbackFor = Exception.class)
-//    default Integer insertList(List<T> list) {
-//        boolean result = saveBatch(list);
-//        return result ? list.size() : 0;
-//    }
-
-    /**
-     * 批量插入数据
      * @param list
      * @return
      */
@@ -60,16 +49,27 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
     }
 
     /**
-     * 批量更新
-     *
-     * @param list
+     * SQL已被updateById重写，勿用
+     * @param entity
+     * @param updateWrapper
      * @return
      */
-//    @Transactional(rollbackFor = Exception.class)
-//    default Integer updateList(List<T> list) {
-//        boolean result = updateBatchById(list);
-//        return result ? list.size() : 0;
-//    }
+    @Deprecated
+    @Override
+    default boolean update(T entity, Wrapper<T> updateWrapper) {
+        return IService.super.update(entity, updateWrapper);
+    }
+
+    /**
+     * SQL已被updateById重写，勿用
+     * @param updateWrapper
+     * @return
+     */
+    @Deprecated
+    @Override
+    default boolean update(Wrapper<T> updateWrapper) {
+        return IService.super.update(updateWrapper);
+    }
 
     /**
      * 根据主键批量更新
@@ -77,6 +77,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
      * @return
      */
     Integer updateList(List<T> list);
+
 
     /**
      * 根据查询条件查询一条数据
