@@ -44,8 +44,6 @@ public class UpdateMethod extends AbstractMethod {
         sqlSet = SqlScriptUtils.convertSet(sqlSet);
         String sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(), sqlSet,
             tableInfo.getKeyColumn(), ENTITY_DOT + tableInfo.getKeyProperty(), additional);
-        log.debug("sql:{}", sql);
-
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
         return addUpdateMappedStatement(mapperClass, modelClass, SqlMethod.UPDATE.getMethod(), sqlSource);
     }
