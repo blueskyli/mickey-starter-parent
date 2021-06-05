@@ -3,12 +3,14 @@ package com.mickey.mybatis.plus.service;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.po.BasePo;
 import com.mickey.model.po.ReflectUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author J·K
@@ -49,6 +51,40 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
     }
 
     /**
+     * 移除不按id修改/删除方法
+     * @param columnMap
+     * @return
+     */
+    @Deprecated
+    @Override
+    default boolean removeByMap(Map<String, Object> columnMap) {
+        throw new NoveSystemException("此方法存在隐患，请更换其他方法");
+    }
+
+    /**
+     * 移除不按id修改/删除方法
+     * @param queryWrapper
+     * @return
+     */
+    @Deprecated
+    @Override
+    default boolean remove(Wrapper<T> queryWrapper) {
+        throw new NoveSystemException("此方法存在隐患，请更换其他方法");
+    }
+
+    /**
+     * 不允许使用按条件更新的sql
+     * @param entity
+     * @param updateWrapper
+     * @return
+     */
+    @Deprecated
+    @Override
+    default boolean saveOrUpdate(T entity, Wrapper<T> updateWrapper) {
+        throw new NoveSystemException("此方法存在隐患，请更换其他方法");
+    }
+
+    /**
      * SQL已被updateById重写，勿用
      * @param entity
      * @param updateWrapper
@@ -57,7 +93,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
     @Deprecated
     @Override
     default boolean update(T entity, Wrapper<T> updateWrapper) {
-        return IService.super.update(entity, updateWrapper);
+        throw new NoveSystemException("此方法存在隐患，请更换其他方法");
     }
 
     /**

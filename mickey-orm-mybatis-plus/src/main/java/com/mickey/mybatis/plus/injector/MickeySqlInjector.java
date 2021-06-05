@@ -5,6 +5,10 @@ import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.injector.methods.*;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.mickey.mybatis.plus.injector.methods.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -16,11 +20,16 @@ import java.util.stream.Stream;
  * @description: 自定义方法SQL注入器
  * @date 2021/6/4 10:03 上午
  */
+@NoArgsConstructor
+@AllArgsConstructor
 public class MickeySqlInjector extends DefaultSqlInjector {
+
+    @Setter
+    @Accessors(chain = true)
+    private Predicate<TableFieldInfo> predicate;
 
     @Override
     public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
-        Predicate<TableFieldInfo> predicate = x -> !(x.getProperty().equals("createTime") || x.getProperty().equals("updateTime"));
         List<AbstractMethod> methodList = Stream.of(
             new Delete(),
             new DeleteByMap(),

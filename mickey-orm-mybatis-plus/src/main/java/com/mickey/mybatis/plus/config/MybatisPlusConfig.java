@@ -3,12 +3,15 @@ package com.mickey.mybatis.plus.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.mickey.mybatis.plus.injector.MickeySqlInjector;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.function.Predicate;
 
 /**
  * @author J·K
@@ -40,6 +43,7 @@ public class MybatisPlusConfig {
 
     @Bean
     public MickeySqlInjector mickeySqlInjector() {
-        return new MickeySqlInjector();
+        Predicate<TableFieldInfo> predicate = x -> !(x.getProperty().equals("createTime") || x.getProperty().equals("updateTime"));
+        return new MickeySqlInjector(predicate);
     }
 }
