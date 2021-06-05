@@ -31,8 +31,6 @@ public class MickeySqlInjector extends DefaultSqlInjector {
     @Override
     public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
         List<AbstractMethod> methodList = Stream.of(
-            new Delete(),
-            new DeleteByMap(),
             new DeleteById(),
             new DeleteBatchByIds(),
             new SelectById(),
@@ -46,11 +44,10 @@ public class MickeySqlInjector extends DefaultSqlInjector {
             new SelectList(),
             new SelectPage()).collect(Collectors.toList());
 
+        methodList.add(new InsertMethod(predicate));
         methodList.add(new InsertBatchMethod(predicate));
         methodList.add(new UpdateBatchMethod(predicate));
         methodList.add(new UpdateByIdMethod(predicate));
-        methodList.add(new InsertMethod(predicate));
-        methodList.add(new UpdateMethod(predicate));
         return methodList;
     }
 }
