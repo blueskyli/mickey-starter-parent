@@ -2,6 +2,7 @@ package com.mickey.mybatis.plus.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.mickey.core.exception.NoveSystemException;
 import com.mickey.model.po.BasePo;
@@ -33,6 +34,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
 
     /**
      * 批量插入数据
+     *
      * @param list
      * @return
      */
@@ -52,6 +54,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
 
     /**
      * 移除不按id修改/删除方法
+     *
      * @param columnMap
      * @return
      */
@@ -63,6 +66,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
 
     /**
      * 移除不按id修改/删除方法
+     *
      * @param queryWrapper
      * @return
      */
@@ -74,6 +78,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
 
     /**
      * 不允许使用按条件更新的sql
+     *
      * @param entity
      * @param updateWrapper
      * @return
@@ -86,6 +91,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
 
     /**
      * SQL已被updateById重写，勿用
+     *
      * @param entity
      * @param updateWrapper
      * @return
@@ -98,6 +104,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
 
     /**
      * SQL已被updateById重写，勿用
+     *
      * @param updateWrapper
      * @return
      */
@@ -109,6 +116,7 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
 
     /**
      * 根据主键批量更新
+     *
      * @param list
      * @return
      */
@@ -133,6 +141,38 @@ public interface IBaseService<T extends BasePo> extends IService<T> {
      */
     default List<T> selectList(T entity) {
         return list(new QueryWrapper(entity));
+    }
+
+    /**
+     * 根据条件查询列表
+     * @param queryWrapper
+     * @return
+     */
+    default List<T> selectList(Wrapper<T> queryWrapper) {
+        return list(queryWrapper);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @param <E>
+     * @return
+     */
+    default <E extends IPage<T>> E selectList(E page) {
+        return page(page);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param page
+     * @param queryWrapper
+     * @param <E>
+     * @return
+     */
+    default <E extends IPage<T>> E selectList(E page, Wrapper<T> queryWrapper) {
+        return page(page, queryWrapper);
     }
 
     /**

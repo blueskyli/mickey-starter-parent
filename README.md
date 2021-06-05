@@ -4,7 +4,24 @@
 mickey-starter-parent
 
 #### 软件架构
-软件架构说明
+
+1. 本项目集成了mybatis+druid 和 先阶段流行的mybatis-plus，可自行选择使用哪一种orm框架
+2. 项目中的代码生成器可对各种orm进行无缝集成，提供了四种形式的代码格式选择
+3. 代码生成器对数据库有一定的限制，目前只支持**mysql数据库**且**主键为自增长**形式，**且唯一**
+4. 由于mybatis-plus存在多种根据条件修改、删除的封装（**Wrapper**），基于安全原因考虑已经底层方法删除，如果需要请自行编写
+5. 本项目底层会自动对create_time，update_time 2个字段在插入、修改时进行过滤，请自行设置数据库默认时间
+
+#### 数据库demo脚本 必备字段
+```sql
+CREATE TABLE `tb_table` (
+  `tb_table_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标志：0：未删除，1：已删除',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'create_time',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'update_time',
+  PRIMARY KEY (`tb_table_id`),
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+```
 
 #### 上传私服
 ```
@@ -55,7 +72,7 @@ aspect:
 * 1.0.SNAPSHOT
 
 ## 代码生成器
-``` java
+```text
 <dependency>
     <groupId>com.mickey</groupId>
     <artifactId>mickey-generator</artifactId>
