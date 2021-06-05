@@ -65,7 +65,7 @@ public class InitTask extends AbstractTask {
         DatabaseMetaData dbMetaData = conn.getMetaData();
 
         // 获取表的结果集
-        ResultSet tableRs = dbMetaData.getTables(null, null, "%", new String[]{"TABLE"});
+        ResultSet tableRs = dbMetaData.getTables(conn.getCatalog(), null, "%", new String[]{"TABLE"});
         Map<String, Table> tables = new HashMap<String, Table>();
         while (tableRs.next()) {
             String tableName = tableRs.getString("TABLE_NAME").toLowerCase();
@@ -81,6 +81,7 @@ public class InitTask extends AbstractTask {
             getColumnsByTable(dbMetaData, table);
             tables.put(tableName,table);
         }
+        conn.close();
         return tables;
     }
 
@@ -111,7 +112,7 @@ public class InitTask extends AbstractTask {
         while (rs.next()) {
             String columnName = rs.getString("COLUMN_NAME").toLowerCase();
             if (StringUtils.isNotBlank(columnName)) {
-                String columnType = rs.getString("TYPE_NAME").toLowerCase();
+                String columnType = rs.getString("TYPE_NAME").toLowerCase().replace("unsigned","").trim();
                 String remarks = rs.getString("REMARKS");
                 int length = rs.getInt("COLUMN_SIZE");
                 // 字段类型精度

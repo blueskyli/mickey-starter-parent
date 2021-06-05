@@ -208,7 +208,7 @@ public class ConvertUtils {
     public static void main(String[] args) {
         System.out.println(convertColumnName2PropName("qr_code_id"));
         System.out.println(convertTableName2EntityName("sc_qr_Code"));
-        Map<String, String> row = jdbc2javaTypeTable.row("bigint");
+        Map<String, String> row = jdbc2javaTypeTable.row("bigint  unsigned".replace("unsigned","").trim());
         if (row.size() == 1) {
             row.forEach((k, v) -> {
                 log.info("key:{}", k);
