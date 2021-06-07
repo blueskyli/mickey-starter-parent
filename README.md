@@ -65,6 +65,7 @@ aspect:
 * 2.0.3 接入skywalking,升级fastjson版本
 * 2.0.4 优化mybatis-plus性能问题
 * 2.0.5 修改日志AOPbug，将springboot父项目修改为springboot依赖
+* 2.0.6 新增maven打包插件，解决剔除parent包后打包出问题的bug
 
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法
