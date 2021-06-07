@@ -208,11 +208,11 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.freemarker</groupId>
-                <artifactId>freemarker</artifactId>
-                <version>2.3.28</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.freemarker</groupId>-->
+<!--                <artifactId>freemarker</artifactId>-->
+<!--                <version>2.3.28</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.javassist</groupId>
                 <artifactId>javassist</artifactId>
@@ -266,16 +266,16 @@
                 <version>4.5.3</version>
             </dependency>
             <!-- servlet -->
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>javax.persistence-api</artifactId>
-                <version>2.2</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>javax.servlet</groupId>-->
+<!--                <artifactId>javax.servlet-api</artifactId>-->
+<!--                <version>3.1.0</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>javax.persistence</groupId>-->
+<!--                <artifactId>javax.persistence-api</artifactId>-->
+<!--                <version>2.2</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>taglibs</groupId>
                 <artifactId>standard</artifactId>
@@ -314,11 +314,11 @@
                 <version>2.2.5</version>
             </dependency>
             <!--excel end-->
-            <dependency>
-                <groupId>org.hibernate.validator</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>6.1.0.Final</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.hibernate.validator</groupId>-->
+<!--                <artifactId>hibernate-validator</artifactId>-->
+<!--                <version>6.1.0.Final</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.apache.skywalking</groupId>
                 <artifactId>apm-toolkit-logback-1.x</artifactId>
