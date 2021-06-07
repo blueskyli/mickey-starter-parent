@@ -21,11 +21,6 @@ public class TraceIDUtils {
      * 创建TraceID为UUID+"0.0""
      */
     public static String createTraceID() {
-
-        StringBuilder sb = new StringBuilder();
-
-//        String traceId = sb.append(UUIDUtils.randomUUID().toString()).append(H_BAR)
-//                .append(ZERO_DOT_ZERO).toString();
         String traceId = UUIDUtils.randomUUID().toString();
         MDC.put(TRACE_ID, traceId);
         log.debug("Create New TraceID is [{}]", traceId);

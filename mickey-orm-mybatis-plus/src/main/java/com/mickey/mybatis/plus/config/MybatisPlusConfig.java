@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.mickey.mybatis.plus.injector.MickeySqlInjector;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -42,6 +43,7 @@ public class MybatisPlusConfig {
     }
 
     @Bean
+    @ConditionalOnMissingBean(MickeySqlInjector.class)
     public MickeySqlInjector mickeySqlInjector() {
         Predicate<TableFieldInfo> predicate = x -> !(x.getProperty().equals("createTime") || x.getProperty().equals("updateTime"));
         return new MickeySqlInjector(predicate);

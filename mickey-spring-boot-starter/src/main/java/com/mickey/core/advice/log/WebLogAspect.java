@@ -26,7 +26,7 @@ import java.util.*;
 @Slf4j
 public class WebLogAspect implements MethodInterceptor {
 
-    StopWatch stopWatch = new StopWatch();
+    ThreadLocal<Long> startTime = new ThreadLocal<>();
     private static final Set<String> METHOD_SET = Sets.newHashSet("POST", "PUT", "PATCH", "DELETE");
 
     @Override
@@ -41,7 +41,7 @@ public class WebLogAspect implements MethodInterceptor {
     }
 
     private void doBefore(MethodInvocation invocation) {
-        stopWatch.start();
+        startTime.set(System.currentTimeMillis());
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         printRequestMsg(request, invocation);
@@ -115,9 +115,7 @@ public class WebLogAspect implements MethodInterceptor {
 
     private void doAfter(Object response) {
         // 处理完请求，返回内容
-        stopWatch.stop();
         log.info("【RESPONSE】: " + response);
-        log.info("【SPEND TIME】: " + stopWatch.getTime() + "ms");
-        stopWatch.reset();
+        log.info("【SPEND TIME】: " + (System.currentTimeMillis() - startTime.get()) + "ms");
     }
 }
