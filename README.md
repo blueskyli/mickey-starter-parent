@@ -64,6 +64,7 @@ aspect:
 
 * 2.0.3 接入skywalking,升级fastjson版本
 * 2.0.4 优化mybatis-plus性能问题
+* 2.0.5 修改日志AOPbug，将springboot父项目修改为springboot依赖
 
 ##试运行版本
 * 1.0.1.SNAPSHOT 修改po为可配置、扩展底层方法
@@ -89,15 +90,36 @@ new CodeGenerator(dataSource, config)
         .start();
 ```
 
-## web项目使用
-
+## web项目使用，统一项目版本
+### 原始springboot父项目
+```text
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.2.RELEASE</version>
+    <relativePath /> <!-- lookup parent from repository -->
+</parent>
+```
+### 方式一
 ```xml
 <parent>
     <groupId>com.mickey</groupId>
     <artifactId>mickey-starter-parent</artifactId>
     <version>${last.version}</version>
 </parent>
-
+```
+### 方式二
+```xml
+<dependency>
+    <groupId>com.mickey</groupId>
+    <artifactId>mickey-starter-parent</artifactId>
+    <version>${last.version}</version>
+    <type>pom</type>
+    <scope>import</scope>
+</dependency>
+```
+### 使用框架提供的功能
+```xml
 <dependency>
     <groupId>com.mickey</groupId>
     <artifactId>mickey-spring-boot-starter</artifactId>
