@@ -35,7 +35,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mysql-connector-java.version>8.0.11</mysql-connector-java.version>
+<!--        <mysql-connector-java.version>8.0.11</mysql-connector-java.version>-->
         <!-- 版本统一 start -->
         <druid.version>1.2.5</druid.version>
         <druid-starter.version>1.2.5</druid-starter.version>
@@ -53,6 +53,7 @@
         <knife4j.version>2.0.7</knife4j.version>
         <fastjson.version>1.2.73</fastjson.version>
         <skywalking-logback.version>6.1.0</skywalking-logback.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
     </properties>
 
     <dependencyManagement>
@@ -139,12 +140,12 @@
                 <scope>import</scope>
             </dependency>
             <!-- mysql -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-connector-java.version}</version>
-                <scope>runtime</scope>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>mysql</groupId>-->
+<!--                <artifactId>mysql-connector-java</artifactId>-->
+<!--                <version>${mysql-connector-java.version}</version>-->
+<!--                <scope>runtime</scope>-->
+<!--            </dependency>-->
             <!-- db -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -239,20 +240,15 @@
                 <version>2.5</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.7</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
-                <version>1.9.3</version>
+                <version>${commons-beanutils.version}</version>
             </dependency>
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>1.14</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>commons-codec</groupId>-->
+<!--                <artifactId>commons-codec</artifactId>-->
+<!--                <version>1.14</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>commons-configuration</groupId>
                 <artifactId>commons-configuration</artifactId>
