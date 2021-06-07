@@ -14,14 +14,6 @@
             <email>564061800@qq.com</email>
         </developer>
     </developers>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.2.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
-    </parent>
-
     <modules>
         <module>mickey-spring-boot-starter</module>
         <module>mickey-model</module>
@@ -43,13 +35,14 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-<!--        <mysql-connector-java.version>8.0.11</mysql-connector-java.version>-->
+        <!--        <mysql-connector-java.version>8.0.11</mysql-connector-java.version>-->
         <!-- 版本统一 start -->
         <druid.version>1.2.5</druid.version>
         <druid-starter.version>1.2.5</druid-starter.version>
         <pagehelper.version>5.1.11</pagehelper.version>
         <pagehelper-starter.version>1.2.13</pagehelper-starter.version>
         <!-- 版本统一 end -->
+        <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
         <hutool.version>5.6.3</hutool.version>
@@ -126,6 +119,13 @@
                 <version>2.0.6</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
@@ -140,12 +140,12 @@
                 <scope>import</scope>
             </dependency>
             <!-- mysql -->
-<!--            <dependency>-->
-<!--                <groupId>mysql</groupId>-->
-<!--                <artifactId>mysql-connector-java</artifactId>-->
-<!--                <version>${mysql-connector-java.version}</version>-->
-<!--                <scope>runtime</scope>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>mysql</groupId>-->
+            <!--                <artifactId>mysql-connector-java</artifactId>-->
+            <!--                <version>${mysql-connector-java.version}</version>-->
+            <!--                <scope>runtime</scope>-->
+            <!--            </dependency>-->
             <!-- db -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -208,11 +208,11 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.freemarker</groupId>-->
-<!--                <artifactId>freemarker</artifactId>-->
-<!--                <version>2.3.28</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.freemarker</groupId>-->
+            <!--                <artifactId>freemarker</artifactId>-->
+            <!--                <version>2.3.28</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>org.javassist</groupId>
                 <artifactId>javassist</artifactId>
@@ -244,11 +244,11 @@
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons-beanutils.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>commons-codec</groupId>-->
-<!--                <artifactId>commons-codec</artifactId>-->
-<!--                <version>1.14</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>commons-codec</groupId>-->
+            <!--                <artifactId>commons-codec</artifactId>-->
+            <!--                <version>1.14</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>commons-configuration</groupId>
                 <artifactId>commons-configuration</artifactId>
@@ -266,16 +266,16 @@
                 <version>4.5.3</version>
             </dependency>
             <!-- servlet -->
-<!--            <dependency>-->
-<!--                <groupId>javax.servlet</groupId>-->
-<!--                <artifactId>javax.servlet-api</artifactId>-->
-<!--                <version>3.1.0</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>javax.persistence</groupId>-->
-<!--                <artifactId>javax.persistence-api</artifactId>-->
-<!--                <version>2.2</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>javax.servlet</groupId>-->
+            <!--                <artifactId>javax.servlet-api</artifactId>-->
+            <!--                <version>3.1.0</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>javax.persistence</groupId>-->
+            <!--                <artifactId>javax.persistence-api</artifactId>-->
+            <!--                <version>2.2</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>taglibs</groupId>
                 <artifactId>standard</artifactId>
@@ -314,11 +314,11 @@
                 <version>2.2.5</version>
             </dependency>
             <!--excel end-->
-<!--            <dependency>-->
-<!--                <groupId>org.hibernate.validator</groupId>-->
-<!--                <artifactId>hibernate-validator</artifactId>-->
-<!--                <version>6.1.0.Final</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.hibernate.validator</groupId>-->
+            <!--                <artifactId>hibernate-validator</artifactId>-->
+            <!--                <version>6.1.0.Final</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>org.apache.skywalking</groupId>
                 <artifactId>apm-toolkit-logback-1.x</artifactId>
@@ -359,6 +359,27 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.3.2.RELEASE</version>
+                    <configuration>
+                        <fork>true</fork>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>repackage</id>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
