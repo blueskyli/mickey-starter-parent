@@ -9,20 +9,21 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mickey-mybatis</artifactId>
+    <artifactId>mickey-nacos</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.mickey</groupId>
-            <artifactId>mickey-mybatis-style-mapper</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mickey</groupId>
-            <artifactId>mickey-mybatis-style-po</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mickey</groupId>
-            <artifactId>mickey-druid</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
     </dependencies>
 
@@ -47,4 +48,5 @@
             <url>http://10.4.89.197:8083/repository/releases/</url>
         </repository>
     </distributionManagement>
+
 </project>

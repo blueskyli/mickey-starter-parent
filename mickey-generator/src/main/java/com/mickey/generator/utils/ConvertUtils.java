@@ -34,7 +34,11 @@ public class ConvertUtils {
             .put("decimal", "BigDecimal", "java.math.BigDecimal")
             .put("int", "Integer", "")
             .put("tinyint", "Integer", "")
+            .put("smallint", "Integer", "")
             .put("bit", "Boolean", "")
+            .put("boolean", "Boolean", "")
+            .put("float", "Float", "")
+            .put("double", "Double", "")
             .build();
     }
 

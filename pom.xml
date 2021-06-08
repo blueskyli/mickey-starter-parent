@@ -6,7 +6,7 @@
 
     <groupId>com.mickey</groupId>
     <artifactId>mickey-starter-parent</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.1.0</version>
     <modules>
         <module>mickey-spring-boot-starter</module>
         <module>mickey-model</module>
@@ -15,6 +15,8 @@
         <module>mickey-redis</module>
         <module>mickey-mybatis-style</module>
         <module>mickey-generator</module>
+        <module>mickey-amqp</module>
+        <module>mickey-nacos</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -33,6 +35,9 @@
         <pagehelper.version>5.1.11</pagehelper.version>
         <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <spring-cloud-alibaba.version>2.1.2.RELEASE</spring-cloud-alibaba.version>
+        <hutool.version>5.6.3</hutool.version>
+        <mybatis-plus.version>3.2.0</mybatis-plus.version>
+        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -40,42 +45,52 @@
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-spring-boot-starter</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-model</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-druid</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-mapper</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-po</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-redis</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-generator</artifactId>
-                <version>1.0.0.RELEASE</version>
+                <version>1.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mickey</groupId>
+                <artifactId>mickey-amqp</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mickey</groupId>
+                <artifactId>mickey-nacos</artifactId>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -188,11 +203,11 @@
                 <artifactId>fastjson</artifactId>
                 <version>1.2.71</version>
             </dependency>
-            <dependency>
-                <groupId>jstl</groupId>
-                <artifactId>jstl</artifactId>
-                <version>1.2</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>jstl</groupId>-->
+<!--                <artifactId>jstl</artifactId>-->
+<!--                <version>1.2</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>taglibs</groupId>
                 <artifactId>standard</artifactId>
@@ -203,7 +218,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.12</version>
+                <version>${lombok.version}</version>
             </dependency>
 
             <dependency>
@@ -270,6 +285,17 @@
                 <artifactId>swagger-bootstrap-ui</artifactId>
                 <version>1.9.6</version>
             </dependency>
+            <!--  解决 Illegal DefaultValue null for parameter type integer    异常  -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>1.5.21</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>1.5.21</version>
+            </dependency>
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
@@ -284,7 +310,12 @@
                         <artifactId>spring-boot-starter-jdbc</artifactId>
                     </exclusion>
                 </exclusions>
-                <version>3.2.0</version>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
