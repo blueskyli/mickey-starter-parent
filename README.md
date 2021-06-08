@@ -27,7 +27,7 @@ CREATE TABLE `tb_table` (
 ```
 versions:set -DnewVersion=2.1.50.RELEASE
 deploy
-versions:set -DnewVersion=2.0.1
+versions:set -DnewVersion=2.0.1-SNAPSHOT
 ```
 #版本介紹
 
@@ -100,8 +100,16 @@ new CodeGenerator(dataSource, config)
     <version>2.3.2.RELEASE</version>
     <relativePath /> <!-- lookup parent from repository -->
 </parent>
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-dependencies</artifactId>
+    <version>2.3.2.RELEASE</version>
+    <type>pom</type>
+    <scope>import</scope>
+</dependency>
 ```
-### 方式一
+### 引用父包
 ```xml
 <parent>
     <groupId>com.mickey</groupId>
@@ -109,16 +117,7 @@ new CodeGenerator(dataSource, config)
     <version>${last.version}</version>
 </parent>
 ```
-### 方式二
-```xml
-<dependency>
-    <groupId>com.mickey</groupId>
-    <artifactId>mickey-starter-parent</artifactId>
-    <version>${last.version}</version>
-    <type>pom</type>
-    <scope>import</scope>
-</dependency>
-```
+
 ### 使用框架提供的功能
 ```xml
 <dependency>
