@@ -9,20 +9,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mickey-mybatis</artifactId>
+    <artifactId>mickey-amqp</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.mickey</groupId>
-            <artifactId>mickey-mybatis-style-mapper</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mickey</groupId>
-            <artifactId>mickey-mybatis-style-po</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mickey</groupId>
-            <artifactId>mickey-druid</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
         </dependency>
     </dependencies>
 
