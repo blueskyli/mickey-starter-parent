@@ -60,6 +60,16 @@ public class ServiceImplTask extends AbstractTask {
             data.put("mapperPackage", entityClass.getBasePackage() + "." + config.getChildPackageMapper() + "." + mapperName);
             data.put("mapperName", mapperName);
         }
+        else if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS)) {
+            IMPL_FLT_NAME = "mybatisPlusServiceImpl.ftl";
+            data.put("mapperPackage", entityClass.getBasePackage() + "." + config.getChildPackageMapper() + "." + mapperName);
+            data.put("mapperName", mapperName);
+        }
+        else if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_EXT)) {
+            IMPL_FLT_NAME = "mybatisPlusServiceImpl-Ext.ftl";
+            data.put("mapperPackage", entityClass.getBasePackage() + "." + config.getChildPackageMapper() + "." + mapperName);
+            data.put("mapperName", mapperName);
+        }
 
         File file = new File(
             config.getProjectPath() +

@@ -18,6 +18,10 @@ public class NoveControllerException extends AbstractException {
 		super(code, message);
 	}
 
+    public NoveControllerException(String message) {
+        super(String.valueOf(500), message);
+    }
+
     public NoveControllerException(Integer code, String message) {
         super(String.valueOf(code), message);
     }

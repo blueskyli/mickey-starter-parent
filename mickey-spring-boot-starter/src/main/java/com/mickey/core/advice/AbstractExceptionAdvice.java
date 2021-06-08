@@ -6,6 +6,10 @@ import com.mickey.core.enums.JsonResult;
 import com.mickey.core.exception.NoveControllerException;
 import com.mickey.core.exception.NoveServiceException;
 import com.mickey.core.exception.NoveSystemException;
+import com.mickey.core.utils.common.MDCUtils;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -27,7 +31,18 @@ import java.util.List;
  * @date 2018/1/30 19:16
  */
 @Slf4j
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class AbstractExceptionAdvice {
+
+    private boolean showB3TraceId;
+    private boolean showTraceId;
+
+    public AbstractExceptionAdvice(boolean showB3TraceId) {
+        this.showB3TraceId = showB3TraceId;
+        this.showTraceId = false;
+    }
 
     @ExceptionHandler(value = Exception.class)
     public JsonResult<Void> defaultErrorHandler(HttpServletRequest request, Exception e) {
@@ -44,7 +59,7 @@ public abstract class AbstractExceptionAdvice {
         }
         return Resp.error()
             .setCode(code)
-            .setMsg(msg);
+            .setMsg(convertErrorMessage(msg));
     }
 
     @ExceptionHandler(BindException.class)
@@ -58,7 +73,7 @@ public abstract class AbstractExceptionAdvice {
         }
         return Resp.error()
             .setCode(ErrorCodeEnum.PARAM_IS_ERROR.getCode())
-            .setMsg(resultList.size() > 0 ? resultList.get(0) : ErrorCodeEnum.PARAM_IS_ERROR.getDesc());
+            .setMsg(convertErrorMessage(resultList.size() > 0 ? resultList.get(0) : ErrorCodeEnum.PARAM_IS_ERROR.getDesc()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -75,7 +90,7 @@ public abstract class AbstractExceptionAdvice {
         }
         return Resp.error()
             .setCode(ErrorCodeEnum.PARAM_IS_ERROR.getCode())
-            .setMsg(resultList.size() > 0 ? resultList.get(0) : ErrorCodeEnum.PARAM_IS_ERROR.getDesc());
+            .setMsg(convertErrorMessage(resultList.size() > 0 ? resultList.get(0) : ErrorCodeEnum.PARAM_IS_ERROR.getDesc()));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -84,7 +99,7 @@ public abstract class AbstractExceptionAdvice {
         HttpMessageNotReadableException messageNotReadableException = (HttpMessageNotReadableException) exception;
         return Resp.error()
             .setCode(400)
-            .setMsg("请求体不能为空");
+            .setMsg(convertErrorMessage("请求体不能为空"));
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -93,25 +108,36 @@ public abstract class AbstractExceptionAdvice {
         HttpRequestMethodNotSupportedException methodNotSupportedException = (HttpRequestMethodNotSupportedException) exception;
         return Resp.error()
             .setCode(405)
-            .setMsg(methodNotSupportedException.getMessage());
+            .setMsg(convertErrorMessage(methodNotSupportedException.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public JsonResult<Void> defalutNumberFormatErrorHandler(HttpServletRequest request, Exception exception) {
+        String msg = ErrorCodeEnum.PARAM_FORMAT_ERROR.getDesc();
         log.error("参数转换失败，请求地址:{},系统异常:{}:", request.getRequestURL(), exception);
         MethodArgumentTypeMismatchException methodArgumentTypeMismatchException = (MethodArgumentTypeMismatchException) exception;
         log.error("参数转换失败，方法：" + methodArgumentTypeMismatchException.getParameter().getMethod().getName() + ",参数：" +
             methodArgumentTypeMismatchException.getName() + "，信息：" + methodArgumentTypeMismatchException.getLocalizedMessage());
         return Resp.error()
             .setCode(ErrorCodeEnum.PARAM_FORMAT_ERROR.getCode())
-            .setMsg(ErrorCodeEnum.PARAM_FORMAT_ERROR.getDesc());
+            .setMsg(convertErrorMessage(msg));
     }
 
     @ExceptionHandler(value = DataIntegrityViolationException.class)
     public JsonResult<Void> dataIntegrityViolationErrorHandler(HttpServletRequest request, Exception e) {
         log.error("数据库处理异常，请求地址:{},系统异常:{}:", request.getRequestURL(), e);
+        String msg = "数据库处理异常";
         return Resp.error()
             .setCode(ErrorCodeEnum.INTERNAL_ERROR.getCode())
-            .setMsg("数据库处理异常");
+            .setMsg(convertErrorMessage(msg));
+    }
+
+    private String convertErrorMessage(String msg) {
+        if (showB3TraceId) {
+            msg = String.format("追踪ID[%s]，异常信息[%s]", MDCUtils.getB3TraceId(), msg);
+        } else if (showTraceId) {
+            msg = String.format("追踪ID[%s]，异常信息[%s]", MDCUtils.getTraceId(), msg);
+        }
+        return msg;
     }
 }

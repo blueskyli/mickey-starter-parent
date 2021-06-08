@@ -1,7 +1,5 @@
 package com.mickey.generator.task;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidPooledConnection;
 import com.google.common.collect.Lists;
 import com.mickey.core.exception.NoveSystemException;
 import com.mickey.generator.core.AbstractTask;
@@ -13,10 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +28,13 @@ import java.util.Map;
 @Slf4j
 public class InitTask extends AbstractTask {
 
-    private DruidDataSource dataSource;
+    private DataSource dataSource;
     private MickeyConfig config;
 
     @Override
     protected boolean doInternal(ApplicationContext context) {
 //        log.info("init task start");
-        dataSource = (DruidDataSource)context.getAttribute("dataSource");
+        dataSource = (DataSource)context.getAttribute("dataSource");
         config = (MickeyConfig)context.getAttribute("config");
         try {
             val map = this.getTablesMap(dataSource);
@@ -61,18 +60,20 @@ public class InitTask extends AbstractTask {
         return true;
     }
 
-    private Map<String, Table> getTablesMap(DruidDataSource dataSource) throws SQLException {
-        DruidPooledConnection conn = dataSource.getConnection();
+    private Map<String, Table> getTablesMap(DataSource dataSource) throws SQLException {
+        Connection conn = dataSource.getConnection();
         DatabaseMetaData dbMetaData = conn.getMetaData();
 
         // 获取表的结果集
-        ResultSet tableRs = dbMetaData.getTables(null, null, "%", new String[]{"TABLE"});
+        ResultSet tableRs = dbMetaData.getTables(conn.getCatalog(), null, "%", new String[]{"TABLE"});
         Map<String, Table> tables = new HashMap<String, Table>();
         while (tableRs.next()) {
             String tableName = tableRs.getString("TABLE_NAME").toLowerCase();
             String tableRemark = tableRs.getString("REMARKS");
             String tableType = tableRs.getString("TABLE_TYPE");
+            String catalog = tableRs.getString("TABLE_CAT");
             Table table = new Table()
+                .setCatalog(catalog)
                 .setTableName(tableName)
                 .setType(tableType)
                 .setRemark(tableRemark);
@@ -80,6 +81,7 @@ public class InitTask extends AbstractTask {
             getColumnsByTable(dbMetaData, table);
             tables.put(tableName,table);
         }
+        conn.close();
         return tables;
     }
 
@@ -93,7 +95,7 @@ public class InitTask extends AbstractTask {
     private void getPkByTable(DatabaseMetaData dbMetaData, Table table) throws SQLException {
         StringBuilder sb = new StringBuilder();
         // 获取主键
-        ResultSet rs = dbMetaData.getPrimaryKeys(null, null, table.getTableName());
+        ResultSet rs = dbMetaData.getPrimaryKeys(table.getCatalog(), null, table.getTableName());
         while (rs.next()) {
             if (sb.length() > 0)
                 sb.append(",");
@@ -110,7 +112,7 @@ public class InitTask extends AbstractTask {
         while (rs.next()) {
             String columnName = rs.getString("COLUMN_NAME").toLowerCase();
             if (StringUtils.isNotBlank(columnName)) {
-                String columnType = rs.getString("TYPE_NAME").toLowerCase();
+                String columnType = rs.getString("TYPE_NAME").toLowerCase().replace("unsigned","").trim();
                 String remarks = rs.getString("REMARKS");
                 int length = rs.getInt("COLUMN_SIZE");
                 // 字段类型精度

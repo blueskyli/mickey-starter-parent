@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -583,6 +584,44 @@ public class DateUtils
         return format(calendar.getTime(),FMT_DEFAULT_DATATIME);
     }
 
+    /**
+     * 计算两个时间差（年，月，星期，日，时，分，秒）
+     * J·K
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static String calculateTimeDifference(Date startDate, Date endDate, DateFunction<Long, Long, Long, Long, Long, Long, String> function) {
+        if (null == startDate || null == endDate) {
+            return "";
+        }
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDateTime fromDateTime = LocalDateTime.ofInstant(startDate.toInstant(), zoneId);
+        LocalDateTime toDateTime = LocalDateTime.ofInstant(endDate.toInstant(), zoneId);
+
+        LocalDateTime tempDateTime = LocalDateTime.from(fromDateTime);
+
+        long years = tempDateTime.until(toDateTime, ChronoUnit.YEARS);
+        tempDateTime = tempDateTime.plusYears(years);
+
+        long months = tempDateTime.until(toDateTime, ChronoUnit.MONTHS);
+        tempDateTime = tempDateTime.plusMonths(months);
+
+        long days = tempDateTime.until(toDateTime, ChronoUnit.DAYS);
+        tempDateTime = tempDateTime.plusDays(days);
+
+        long hours = tempDateTime.until(toDateTime, ChronoUnit.HOURS);
+        tempDateTime = tempDateTime.plusHours(hours);
+
+        long minutes = tempDateTime.until(toDateTime, ChronoUnit.MINUTES);
+        tempDateTime = tempDateTime.plusMinutes(minutes);
+
+        long seconds = tempDateTime.until(toDateTime, ChronoUnit.SECONDS);
+
+        return function.apply(years, months, days, hours, minutes, seconds);
+    }
+
     public static void main(String[] args) throws ParseException {
         log.info("{}",DateUtils.format(new Date(),DateUtils.FMT_DEFAULT_DATATIME));
         log.info("{}",DateUtils.getCurrentDate());
@@ -622,5 +661,14 @@ public class DateUtils
         log.info("{}",DateUtils.getEndOfDay("2020-01-01 11:11:11",FMT_DEFAULT_DATATIME));
         log.info("{}",DateUtils.getEndOfDay("2020-01-01",FMT_DEFAULT_DATA));
         log.info("{}",DateUtils.getEndOfDay("2020-01-01 11:11:11",FMT_DEFAULT_DATA));
+
+        String s = DateUtils.calculateTimeDifference(DateUtils.parseToDate("2020-12-27 12:12:12", DateUtils.FMT_DEFAULT_DATATIME), new Date(),
+            (years, months, days, hours, minutes, seconds) -> (0 == years ? "" : years + "年")
+                + (0 == months ? "" : months + "月")
+                + (0 == days ? "" : days + "天")
+                + (hours + "小时")
+                + (minutes + "分钟"));
+
+        log.info(s);
     }
 }

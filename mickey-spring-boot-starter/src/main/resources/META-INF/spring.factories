@@ -1,3 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.mickey.core.autoconfigure.InterceptorAutoConfiguration
+com.mickey.core.autoconfigure.InterceptorAutoConfiguration,\
+com.mickey.core.advice.log.ConfigurableAdvisorConfig

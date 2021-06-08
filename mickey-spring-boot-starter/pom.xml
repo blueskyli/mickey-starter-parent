@@ -5,24 +5,18 @@
     <parent>
         <artifactId>mickey-starter-parent</artifactId>
         <groupId>com.mickey</groupId>
-        <version>1.1.0</version>
+        <version>2.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>mickey-spring-boot-starter</artifactId>
-
     <dependencies>
-        <dependency>
-            <groupId>com.mickey</groupId>
-            <artifactId>mickey-mybatis</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.mickey</groupId>
             <artifactId>mickey-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mickey</groupId>
-            <artifactId>mickey-generator</artifactId>
+            <artifactId>mickey-model</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -51,10 +45,6 @@
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava-gwt</artifactId>
         </dependency>
         <!-- excel -->
         <dependency>
@@ -96,12 +86,12 @@
             <artifactId>fastjson</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-logback-1.x</artifactId>
         </dependency>
         <!--热部署-->
         <dependency>

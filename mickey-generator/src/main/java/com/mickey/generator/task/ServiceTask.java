@@ -20,6 +20,9 @@ import java.util.Map;
  */
 @Slf4j
 public class ServiceTask extends AbstractTask {
+
+    private static String IMPL_FLT_NAME = "service.ftl";
+
     @Override
     protected boolean doInternal(ApplicationContext context) {
 //        log.info("service task start");
@@ -45,6 +48,11 @@ public class ServiceTask extends AbstractTask {
         data.put("entityName", entityClass.getClassName());
         data.put("entityPackage",entityClass.getAllPackage() + "." + entityClass.getClassName());
         data.put("serviceName", serviceName);
+        if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS)) {
+            IMPL_FLT_NAME = "mybatisPlusService.ftl";
+        } else if (config.getType().equals(MickeyConfig.TypeEnum.MYBATIS_PLUS_EXT)) {
+            IMPL_FLT_NAME = "mybatisPlusService-Ext.ftl";
+        }
 
         File file = new File(
             config.getProjectPath() +
@@ -56,7 +64,7 @@ public class ServiceTask extends AbstractTask {
 
         try {
             freemarker.template.Configuration cfg = getConfiguration();
-            cfg.getTemplate("service.ftl").process(data,
+            cfg.getTemplate(IMPL_FLT_NAME).process(data,
                 new FileWriter(file));
         } catch (Exception e) {
             log.error("{}",e);

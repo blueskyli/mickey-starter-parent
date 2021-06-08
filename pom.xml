@@ -2,11 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.2.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mickey</groupId>
     <artifactId>mickey-starter-parent</artifactId>
-    <version>1.1.0</version>
+    <version>2.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <developers>
+        <developer>
+            <name>Mickey</name>
+            <email>564061800@qq.com</email>
+        </developer>
+    </developers>
     <modules>
         <module>mickey-spring-boot-starter</module>
         <module>mickey-model</module>
@@ -17,27 +30,35 @@
         <module>mickey-generator</module>
         <module>mickey-amqp</module>
         <module>mickey-nacos</module>
+        <module>mickey-openfeign</module>
+        <module>mickey-orm-mybatis-plus</module>
     </modules>
-    <packaging>pom</packaging>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.15.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
-    </parent>
 
     <properties>
+        <java.version>1.8</java.version>
+        <resource.delimiter>@</resource.delimiter>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <druid.version>1.1.20</druid.version>
+        <!--        <mysql-connector-java.version>8.0.11</mysql-connector-java.version>-->
+        <!-- 版本统一 start -->
+        <druid.version>1.2.5</druid.version>
+        <druid-starter.version>1.2.5</druid-starter.version>
         <pagehelper.version>5.1.11</pagehelper.version>
-        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
-        <spring-cloud-alibaba.version>2.1.2.RELEASE</spring-cloud-alibaba.version>
+        <pagehelper-starter.version>1.2.13</pagehelper-starter.version>
+        <!-- 版本统一 end -->
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
         <hutool.version>5.6.3</hutool.version>
-        <mybatis-plus.version>3.2.0</mybatis-plus.version>
+        <mybatis-spring-boot-starter.version>2.1.2</mybatis-spring-boot-starter.version>
+        <mybatis-plus-version>3.4.3</mybatis-plus-version>
         <lombok.version>1.18.12</lombok.version>
+        <guava-gwt.version>30.1.1-jre</guava-gwt.version>
+        <knife4j.version>2.0.7</knife4j.version>
+        <fastjson.version>1.2.73</fastjson.version>
+        <skywalking-logback.version>6.1.0</skywalking-logback.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
     </properties>
 
     <dependencyManagement>
@@ -45,52 +66,62 @@
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-spring-boot-starter</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-model</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-druid</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-mapper</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-mybatis-style-po</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-redis</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-generator</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-amqp</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.mickey</groupId>
                 <artifactId>mickey-nacos</artifactId>
-                <version>1.1.0</version>
+                <version>2.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mickey</groupId>
+                <artifactId>mickey-openfeign</artifactId>
+                <version>2.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mickey</groupId>
+                <artifactId>mickey-orm-mybatis-plus</artifactId>
+                <version>2.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -107,12 +138,18 @@
                 <scope>import</scope>
             </dependency>
             <!-- mysql -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.16</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>mysql</groupId>-->
+            <!--                <artifactId>mysql-connector-java</artifactId>-->
+            <!--                <version>${mysql-connector-java.version}</version>-->
+            <!--                <scope>runtime</scope>-->
+            <!--            </dependency>-->
             <!-- db -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-starter.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
@@ -120,20 +157,65 @@
             </dependency>
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-starter.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.mybatis.spring.boot</groupId>
+                        <artifactId>mybatis-spring-boot-starter</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper</artifactId>
                 <version>${pagehelper.version}</version>
             </dependency>
+            <!-- lombok -->
             <dependency>
-                <groupId>org.freemarker</groupId>
-                <artifactId>freemarker</artifactId>
-                <version>2.3.28</version>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava-gwt</artifactId>
+                <version>${guava-gwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.freemarker</groupId>-->
+            <!--                <artifactId>freemarker</artifactId>-->
+            <!--                <version>2.3.28</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>org.javassist</groupId>
                 <artifactId>javassist</artifactId>
                 <version>3.23.1-GA</version>
             </dependency>
-
             <dependency>
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
@@ -142,7 +224,7 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.7</version>
+                <version>2.6</version>
             </dependency>
             <dependency>
                 <groupId>com.belerweb</groupId>
@@ -156,20 +238,15 @@
                 <version>2.5</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.7</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
-                <version>1.9.3</version>
+                <version>${commons-beanutils.version}</version>
             </dependency>
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>1.14</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>commons-codec</groupId>-->
+            <!--                <artifactId>commons-codec</artifactId>-->
+            <!--                <version>1.14</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>commons-configuration</groupId>
                 <artifactId>commons-configuration</artifactId>
@@ -180,7 +257,6 @@
                 <artifactId>commons-logging</artifactId>
                 <version>1.2</version>
             </dependency>
-
             <!-- http -->
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -188,49 +264,20 @@
                 <version>4.5.3</version>
             </dependency>
             <!-- servlet -->
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>javax.persistence-api</artifactId>
-                <version>2.2</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.71</version>
-            </dependency>
-<!--            <dependency>-->
-<!--                <groupId>jstl</groupId>-->
-<!--                <artifactId>jstl</artifactId>-->
-<!--                <version>1.2</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>javax.servlet</groupId>-->
+            <!--                <artifactId>javax.servlet-api</artifactId>-->
+            <!--                <version>3.1.0</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>javax.persistence</groupId>-->
+            <!--                <artifactId>javax.persistence-api</artifactId>-->
+            <!--                <version>2.2</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>taglibs</groupId>
                 <artifactId>standard</artifactId>
                 <version>1.1.2</version>
-            </dependency>
-
-            <!-- lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-jdbc</artifactId>
-                    </exclusion>
-                </exclusions>
-                <version>2.1.2</version>
             </dependency>
             <dependency>
                 <groupId>org.json</groupId>
@@ -265,52 +312,15 @@
                 <version>2.2.5</version>
             </dependency>
             <!--excel end-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.hibernate.validator</groupId>-->
+            <!--                <artifactId>hibernate-validator</artifactId>-->
+            <!--                <version>6.1.0.Final</version>-->
+            <!--            </dependency>-->
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava-gwt</artifactId>
-                <version>26.0-jre</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>2.9.2</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>2.9.2</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>1.9.6</version>
-            </dependency>
-            <!--  解决 Illegal DefaultValue null for parameter type integer    异常  -->
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>1.5.21</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-models</artifactId>
-                <version>1.5.21</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.validator</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>6.1.5.Final</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-jdbc</artifactId>
-                    </exclusion>
-                </exclusions>
-                <version>${mybatis-plus.version}</version>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking-logback.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -335,7 +345,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <version>3.2.1</version>
                     <configuration>
                         <attach>true</attach>
                     </configuration>

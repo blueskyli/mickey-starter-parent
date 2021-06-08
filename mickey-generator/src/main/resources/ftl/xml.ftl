@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <#assign right="{" />
 <#assign left="}" />
 <#assign pk=pkName />
 <mapper namespace="${xmlNameSpace}">
+
+  <!-- 通用查询映射结果 -->
   <resultMap id="BaseResultMap" type="${entityPath}">
     <#list fields as field>
       <#if field.fieldName == pk>
@@ -183,15 +184,9 @@
       </foreach>
   </select>
 
-  <!-- 查询符合条件的记录  锁定符合条件的行-->
-  <select id="selectForUpdate" parameterType="${entityPath}" resultMap="BaseResultMap">
-      <include refid="Base_Select"/>
-      for update
-  </select>
-
   <#macro generateInsertColumn>
     <#list fields as field>
-      <#if field.columnName != "create_time" && field.columnName != "update_time">
+      <#if field.fieldName != pk && field.columnName != "create_time" && field.columnName != "update_time">
         <if test="${field.fieldName} != null">
           ${field.columnName},
         </if>
@@ -201,7 +196,7 @@
 
   <#macro generateInsertValue>
     <#list fields as field>
-      <#if field.columnName != "create_time" && field.columnName != "update_time">
+      <#if field.fieldName != pk && field.columnName != "create_time" && field.columnName != "update_time">
         <if test="${field.fieldName} != null">
           #${right}${field.fieldName}${left},
         </if>

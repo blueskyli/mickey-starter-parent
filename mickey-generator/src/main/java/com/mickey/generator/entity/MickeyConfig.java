@@ -102,6 +102,8 @@ public class MickeyConfig {
      */
     public enum TypeEnum{
         PO,
-        MAPPER
+        MAPPER,
+        MYBATIS_PLUS,
+        MYBATIS_PLUS_EXT
     }
 }

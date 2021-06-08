@@ -1,6 +1,5 @@
 package com.mickey.generator;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.mickey.generator.core.Application;
 import com.mickey.generator.core.ApplicationContext;
 import com.mickey.generator.core.SimpleApplicationContext;
@@ -9,6 +8,8 @@ import com.mickey.generator.entity.MickeyConfig;
 import com.mickey.generator.task.*;
 import lombok.Data;
 import lombok.SneakyThrows;
+
+import javax.sql.DataSource;
 
 /**
  * @author J·K
@@ -19,7 +20,7 @@ import lombok.SneakyThrows;
 public class CodeGenerator {
     private ApplicationContext context = new SimpleApplicationContext();
     private MickeyConfig config = new MickeyConfig();
-    private DruidDataSource dataSource;
+    private DataSource dataSource;
     private Application application;
     //是否自定义生成类
     private boolean customDefined = false;
@@ -31,11 +32,11 @@ public class CodeGenerator {
             .registerTask(EntityTask.class);
     }
 
-    public CodeGenerator(DruidDataSource dataSource) {
+    public CodeGenerator(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public CodeGenerator(DruidDataSource dataSource, MickeyConfig config) {
+    public CodeGenerator(DataSource dataSource, MickeyConfig config) {
         this.dataSource = dataSource;
         this.config = config;
     }

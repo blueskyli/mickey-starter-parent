@@ -1,10 +1,9 @@
 package com.mickey.core.exception;
 
 /**
- * @Description: 系统异常,一般为非NoveServiceException异常
  * @author J·K
+ * @Description: 系统异常, 一般为非NoveServiceException异常
  * @date 2018/6/21 14:31
-
  */
 public class NoveSystemException extends AbstractException {
 
@@ -16,6 +15,10 @@ public class NoveSystemException extends AbstractException {
      */
     public NoveSystemException(String code, String message) {
         super(code, message);
+    }
+
+    public NoveSystemException(String message) {
+        super(String.valueOf(500), message);
     }
 
     public NoveSystemException(Integer code, String message) {

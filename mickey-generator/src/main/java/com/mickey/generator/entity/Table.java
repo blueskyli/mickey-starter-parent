@@ -11,6 +11,10 @@ import java.util.List;
 public class Table
 {
     /**
+     * 所属数据库
+     */
+    private String catalog;
+    /**
      * 名称
      */
     private String tableName;
